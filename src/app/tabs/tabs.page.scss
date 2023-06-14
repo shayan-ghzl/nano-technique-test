@@ -1,0 +1,47 @@
+.tabs-inner{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    contain: layout size style;
+}
+.page-container{
+    position: relative;
+    flex: 1;
+    contain: layout size style;
+}
+.hero-section{
+    background-color: var(--ion-color-primary);
+}
+.welcome{
+    --ion-padding: 28px;
+}
+ion-thumbnail{
+    --size: 120px;
+    margin: 0 auto;
+}
+.dome{
+    height: 28px;
+    border-radius: 28px 28px 0 0;
+    background-color: #cacaca;
+}
+ion-tab-bar{
+    --ion-tab-bar-border-color: var(--bs-gray-500);
+    --ion-tab-bar-background: #d9d9d9;
+    .nanotech-icon{
+        font-size: 20px;
+    }
+}
+.jewel-style{
+    border-radius: 50%;
+    border: 1px solid var(--bs-gray-500);
+    max-width: 60px;
+    height: 55px;
+    --background: #cacaca;
+    transform: translateY(-28px);
+    z-index: 1;
+
+    .nanotech-icon{
+        margin-bottom: -24px;
+        width: 20px;
+    }
+}
