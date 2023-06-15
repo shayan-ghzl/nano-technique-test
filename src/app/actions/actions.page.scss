@@ -1,0 +1,37 @@
+ion-content{
+    --background: #cacaca;
+    --padding-bottom: 16px;
+    --padding-start: 32px;
+    --padding-end: 32px;
+}
+ion-refresher{
+    background: #cacaca;
+}
+ion-item{
+    font-size: 13px;
+    color: #707070;
+}
+ion-text{
+    h6{
+        font-size: 14px;
+        margin-top: 12px;
+    }
+}
+ion-col{
+    --ion-grid-column-padding-xs: 2px;
+}
+ion-card{
+    &:not(:last-child){
+        margin: 0 0 16px 0;
+    }
+    &:last-child{
+        margin: 0;
+    }
+}
+ion-thumbnail{
+    --size: 42px;
+    margin-inline: 0px 8px;
+}
+.nanotech-icon{
+    margin-left: 4px;
+}
