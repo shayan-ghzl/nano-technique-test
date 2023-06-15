@@ -1,0 +1,9 @@
+<div class="component-container">
+  <div class="stars">
+    <ng-container *ngFor="let item of list">                      
+      <svg width="23.015" height="21.938" viewBox="0 0 23.015 21.938" [ngClass]="{'active': item.isActive}" (click)="select(item)">                           
+          <path d="M14.092,17.788a.646.646,0,0,1-.576-.419l-2.379-7.322c-.075-.231-.2-.231-.272,0l-2.38,7.322a.646.646,0,0,1-.576.419H.21c-.243,0-.281.116-.084.259l6.228,4.524a.645.645,0,0,1,.22.678L4.2,30.57c-.075.231.023.3.22.16l6.228-4.524a.645.645,0,0,1,.712,0l6.228,4.525c.2.143.3.071.22-.16L15.429,23.25a.645.645,0,0,1,.22-.678l6.228-4.524c.2-.143.159-.259-.084-.259h-7.7Z" transform="translate(0.505 -9.374)" fill="none" stroke="#7c7c7c" stroke-width="1"></path>                         
+      </svg>  
+    </ng-container>                      
+  </div>
+</div>

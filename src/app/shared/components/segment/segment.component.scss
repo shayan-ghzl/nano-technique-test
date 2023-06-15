@@ -1,0 +1,27 @@
+.segment {
+    display: flex;
+    font-size: 14px;
+    user-select: none;
+}
+.segment label {
+    position: relative;
+    display: block;
+    flex: 1;
+    text-align: center;
+    background: var(--ion-color-light);
+    padding: 8px 0;
+    border: 2px solid var(--ion-color-primary);
+    cursor: pointer;
+    transition: background 300ms linear;
+}
+.segment input:checked + label {
+    background: var(--ion-color-primary);
+    color: var(--ion-color-light);
+}
+.segment input[type='radio'] {
+    display: none;
+}
+.segment input[disabled] + label {
+    opacity: 0.5;
+    cursor: not-allowed;
+}   

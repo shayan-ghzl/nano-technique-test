@@ -1,0 +1,8 @@
+<div class="component-container">
+  <div class="segment">
+    <ng-container *ngFor="let item of segment;let index = index">
+      <input type="radio" name="segment-radio-type" [id]="'option-' + index" [value]="item.value" [checked]="item.value === activeSegmentValue">
+      <label [for]="'option-' + index" (click)="select(item)">{{item.label}}</label>
+    </ng-container>
+  </div>
+</div>
