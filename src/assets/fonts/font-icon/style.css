@@ -27,6 +27,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.nanotech-icon-add:before {
+  content: "\e902";
+}
 .nanotech-icon-tick:before {
   content: "\e901";
 }
