@@ -1,0 +1,85 @@
+<app-segment [segment]="segment" [(ngModel)]="segmentValue"></app-segment>
+  
+<ion-content>
+  <ion-card class="ion-no-margin ion-padding">
+    <ion-card-content [ngSwitch]="segmentValue" class="segment-body">
+
+      <div *ngSwitchCase="'1'" class="description">
+        <ion-label class="fw-bold">نتیجه کار</ion-label>
+        <ion-list>
+          <ion-radio-group value="done">
+            <ion-item>
+              <ion-radio value="done" justify="start" labelPlacement="end">انجام شدن</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="notDone" justify="start" labelPlacement="end">انجام نشدن</ion-radio>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-radio value="incomplete" justify="start" labelPlacement="end">ناقص انجام شدن</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+        <ion-text class="ion-text-center">
+            <p>برای بررسی بهتر شرح کوتاهی از فعالیت خود ذکر کنید.
+              ( اعم از انجام شدن، انجام نشدن یا ناقص شدن)</p>
+        </ion-text>
+        <ion-label class="fw-bold ion-margin-top">شرح فعالیت</ion-label>
+        <ion-textarea
+          [autoGrow]="true"
+          value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus sem, auctor accumsan egestas sed, venenatis at ex. Nam consequat ex odio, suscipit rhoncus orci dictum eget. Aenean sit amet ligula varius felis facilisis lacinia nec volutpat nulla. Duis ullamcorper sit amet turpis sed blandit. Integer pretium massa eu faucibus interdum."
+        >
+        </ion-textarea>
+      </div>
+  
+      <div *ngSwitchCase="'2'" class="points">
+        <ion-text class="ion-text-center">
+          <p>پس از پایان پروژه براساس دیدگاه خود به هریک
+            از موارد زیر امتیاز دهید.</p>
+        </ion-text>
+        <div class="ion-text-center star-rating-field">
+          <ion-label class="fw-bold">نتیجه کار</ion-label>
+          <app-star-rating></app-star-rating>
+        </div>
+        <div class="ion-text-center star-rating-field">
+          <ion-label class="fw-bold">آموزش کاربری</ion-label>
+          <app-star-rating></app-star-rating>
+        </div>
+        <div class="ion-text-center star-rating-field">
+          <ion-label class="fw-bold">رضایت مشتری</ion-label>
+          <app-star-rating></app-star-rating>
+        </div>
+      </div>
+    
+      <div *ngSwitchCase="'3'" class="uploads">
+        <div class="ion-margin-bottom">
+          <ion-label class="fw-bold ion-text-center">آپلود تصویر فرم انجام پروژه*</ion-label>
+          <ion-row class="ion-justify-content-center">
+            <ion-thumbnail>
+              <i class="nanotech-icon nanotech-icon-add"></i>
+            </ion-thumbnail>
+          </ion-row>
+       </div>
+        <div class="ion-margin-bottom">
+          <ion-label class="fw-bold ion-text-center">آپلود تصاویر محل انجام پروژه</ion-label>
+          <ion-row class="ion-justify-content-between">
+            <ion-thumbnail>
+              <i class="nanotech-icon nanotech-icon-add"></i>
+            </ion-thumbnail>
+            <ion-thumbnail>
+              <i class="nanotech-icon nanotech-icon-add"></i>
+            </ion-thumbnail>
+          </ion-row>
+          <ion-row class="ion-justify-content-between">
+            <ion-thumbnail>
+              <i class="nanotech-icon nanotech-icon-add"></i>
+            </ion-thumbnail>
+            <ion-thumbnail>
+              <i class="nanotech-icon nanotech-icon-add"></i>
+            </ion-thumbnail>
+          </ion-row>
+        </div>
+      </div>
+
+    </ion-card-content>  
+  </ion-card>
+</ion-content>
