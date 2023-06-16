@@ -12,4 +12,11 @@ export class MonthlyReportPage implements OnInit {
   ngOnInit() {
   }
 
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      event.target.complete();
+    }, 5000);
+  }
+
 }

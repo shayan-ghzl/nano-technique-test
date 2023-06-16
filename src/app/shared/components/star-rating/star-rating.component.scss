@@ -1,13 +1,13 @@
 .stars {
-    display: flex;
+    display: inline-flex;
     svg {
-        margin: 0 2px 0 0;
-        width: 22px;
-        height: 22px;
+        display: block;
+        margin: 0 4px 0 0;
+        width: 24px;
+        height: 24px;
         cursor: pointer
     }
 }
-
 .stars svg:hover path, .stars svg:hover~svg path, .stars .active path, .stars .active~svg path {
     fill: var(--ion-color-warning);
 }
