@@ -1,7 +1,7 @@
 <app-segment [segment]="segment" [(ngModel)]="segmentValue"></app-segment>
   
 <ion-content>
-  <ion-card class="ion-no-margin ion-padding">
+  <ion-card class="ion-no-margin">
     <ion-card-content [ngSwitch]="segmentValue" class="segment-body">
 
       <div *ngSwitchCase="'1'" class="description">
