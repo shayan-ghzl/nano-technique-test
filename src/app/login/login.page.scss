@@ -1,0 +1,61 @@
+.inner-section{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.hero-section{
+    position: relative;
+    background-color: var(--ion-color-primary);
+}
+.page-container{
+    flex: 1;
+    padding: 0 32px;
+    background-color: var(--ion-color-light-tint);
+}
+.welcome{
+    --ion-padding: 28px;
+}
+.main-banner{
+    --size: 232px;
+    margin: 0 auto;
+    transform: translateY(8px);
+}
+.group-banner{
+    --size: 95px;
+    position: absolute;
+    left: 0;
+    bottom: 14px;
+}
+.dome{
+    height: 28px;
+    border-radius: 28px 28px 0 0;
+    background-color: var(--ion-color-light-tint);
+}
+ion-text{
+    --color: #373737;
+    font-size: 13px;
+    h4{
+        margin-top: 0;
+        margin-bottom: 24px;
+    }
+    p{
+        margin-top: 0;
+        margin-bottom: 24px;
+    }
+}
+ion-input{
+    --padding-start: 8px;
+    --background: #edebeb;
+    --border-radius: 9px;
+    min-height: 42px !important;
+    margin-bottom: 18px;
+}
+::ng-deep{
+    .input-highlight{
+        width: calc(100% - 18px) !important;
+        margin: 0 9px;
+    }
+    .input-bottom{
+        margin: 0 9px;
+    }
+}

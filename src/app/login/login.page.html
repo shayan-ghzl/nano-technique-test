@@ -1,13 +1,31 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="inner-section">
+    <div class="hero-section">
+      <div class="welcome ion-padding-top">
+        <ion-thumbnail class="main-banner">
+          <img alt="branding banner" src="./assets/images/banner-2.png" />
+        </ion-thumbnail>
+        <ion-thumbnail class="group-banner">
+          <img alt="branding banner" src="./assets/images/group.png" />
+        </ion-thumbnail>
+      </div>
+      <div class="dome"></div>
+    </div>
+    <div class="page-container">
+        <ion-text color="dark" class="ion-text-center">
+          <h4 class="fw-bold">ورود به حساب کاربری</h4>
+        </ion-text>
+        <ion-text>
+          <p class="ion-text-center">جهت گزارشگیری و انجام امور یکی از گزینه های زیر را انتخاب نمایید:</p>
+        </ion-text>
+        <form [formGroup]="customerForm" (ngSubmit)="submit()" autocomplete="off">
+          <ion-input formControlName="username" errorText="نام کاربری صحیح نیست" [clearInput]="true" aria-label="نام کاربری" color="dark" placeholder="نام کاربری"></ion-input>
+          <ion-input formControlName="password" errorText="کلمه عبور صحیح نیست" [clearInput]="true" aria-label="رمز عبور" color="dark" placeholder="رمز عبور"></ion-input>
+          <ion-button class="ion-no-margin" type="submit" color="primary" expand="block" [disabled]="customerForm.invalid">ورود به حساب کاربری</ion-button>
+        </form>
+    </div>
+  </div>
+
+
 </ion-content>
