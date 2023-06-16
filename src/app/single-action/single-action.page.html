@@ -1,0 +1,36 @@
+<ion-content>
+  <ion-card class="ion-no-margin">
+    <ion-card-content>
+      <ion-label class="fw-bold action-title" color="primary">پروژه 1</ion-label>
+      <div>
+        <ion-text>
+          <i class="nanotech-icon nanotech-icon-user"></i>
+          <p>احمد احمدیان</p>
+        </ion-text>
+        <ion-text>
+          <i class="nanotech-icon nanotech-icon-arrow-left"></i>
+          <p>نوع فعالیت: آموزش و نصب</p>
+        </ion-text>
+        <ion-text>
+          <i class="nanotech-icon nanotech-icon-location"></i>
+          <p>مکان: خیابان جی</p>
+        </ion-text>
+      </div>
+      <ion-label class="fw-bold ion-margin-top">شرح فعالیت</ion-label>
+      <ion-textarea
+        class="ion-margin-bottom"
+        [autoGrow]="true"
+        value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus sem, auctor accumsan egestas sed, venenatis at ex. Nam consequat ex odio, suscipit rhoncus orci dictum eget. Aenean sit amet ligula varius felis facilisis lacinia nec volutpat nulla. Duis ullamcorper sit amet turpis sed blandit. Integer pretium massa eu faucibus interdum."
+      >
+      </ion-textarea>
+      <ion-button color="primary" expand="block" class="ion-no-margin ion-margin-bottom" id="present-alert">شروع به انجام کار</ion-button>
+      <ion-button color="medium" expand="block" class="ion-no-margin" disabled>پایان پروژه</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-alert
+  trigger="present-alert"
+  header="آیا اطمینان دارید؟"
+  message="تاریخ: 13402/01/10 | زمان: 19:58"
+  [buttons]="alertButtons"
+></ion-alert>

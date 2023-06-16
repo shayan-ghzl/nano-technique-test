@@ -1,0 +1,44 @@
+ion-content{
+    --background: #cacaca;
+    --padding-bottom: 16px;
+    --padding-start: 32px;
+    --padding-end: 32px;
+}
+ion-card-content{
+    p{
+        font-size: 13px;
+    }
+}
+ion-textarea{
+    --background: #e5e7eb;
+    --ion-item-border-color: #aaa;
+    --border-width: 2px;
+    border-radius: 5px;
+    --padding-end: 4px;
+    --padding-start: 4px;
+    font-size: 13px;
+    overflow: hidden;
+    border: var(--border-width) var(--border-style) var(--ion-item-border-color);
+}
+ion-alert{
+    --ion-color-step-600: #000;
+}
+ion-label{
+    display: block;
+    &:not(.action-title){
+        margin-bottom: 8px;
+    }
+    &.action-title{
+        margin-bottom: 16px;
+    }
+}
+ion-text{
+    display: flex;
+    margin-bottom: 8px;
+    p{
+        margin: 0;
+    }
+    .nanotech-icon{
+        margin-left: 6px;
+    }
+}
