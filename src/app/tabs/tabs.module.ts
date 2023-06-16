@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
+import { TabLayoutHeaderComponent } from '../shared/components/tab-layout-header/tab-layout-header.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { TabsPage } from './tabs.page';
     IonicModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPage, TabLayoutHeaderComponent]
 })
 export class TabsPageModule {}

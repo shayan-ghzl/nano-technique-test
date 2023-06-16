@@ -1,21 +1,23 @@
-<div class="tabs-inner">
-  <div class="hero-section">
-    <div class="welcome ion-padding-top">
-      <ion-thumbnail>
-        <img alt="avatar icon" src="./assets/icon/avatar.svg" />
-      </ion-thumbnail>
-      <ion-text color="light" class="ion-text-center">
-        <h6 class="ion-margin-vertical">خوش آمدید <ion-text color="warning" class="fw-bold">ادمین</ion-text></h6>
-      </ion-text>
+<ion-content>
+  <div class="tabs-inner">
+    <div class="hero-section">
+      <div class="welcome">
+        <ion-thumbnail>
+          <img alt="avatar icon" src="./assets/icon/avatar.svg" />
+        </ion-thumbnail>
+        <ion-text color="light" class="ion-text-center">
+          <h6 class="ion-no-margin ion-margin-top">خوش آمدید <ion-text color="warning" class="fw-bold">ادمین</ion-text></h6>
+        </ion-text>
+      </div>
+  
+      <div class="dome"></div>
     </div>
-
-    <div class="dome"></div>
+  
+    <div class="page-container">
+      <ion-router-outlet></ion-router-outlet> 
+    </div>
   </div>
-
-  <div class="page-container">
-    <ion-router-outlet></ion-router-outlet> 
-  </div>
-</div>
+</ion-content>
 
 <ion-tab-bar class="ion-justify-content-between" slot="bottom">
   <ion-tab-button disabled>
@@ -27,7 +29,7 @@
     <i aria-hidden="true" class="nanotech-icon nanotech-icon-home"></i>
   </ion-tab-button>
   
-  <ion-tab-button>
+  <ion-tab-button (click)="back()">
     <i aria-hidden="true" class="nanotech-icon nanotech-icon-back"></i>
   </ion-tab-button>
 </ion-tab-bar>
