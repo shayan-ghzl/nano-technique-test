@@ -1,5 +1,4 @@
 <ion-content>
-
   <div class="inner-section">
     <div class="hero-section">
       <div class="welcome ion-padding-top">
@@ -20,12 +19,14 @@
           <p class="ion-text-center">جهت گزارشگیری و انجام امور یکی از گزینه های زیر را انتخاب نمایید:</p>
         </ion-text>
         <form [formGroup]="customerForm" (ngSubmit)="submit()" autocomplete="off">
-          <ion-input formControlName="username" errorText="نام کاربری صحیح نیست" [clearInput]="true" aria-label="نام کاربری" color="dark" placeholder="نام کاربری"></ion-input>
-          <ion-input formControlName="password" errorText="کلمه عبور صحیح نیست" [clearInput]="true" aria-label="رمز عبور" color="dark" placeholder="رمز عبور"></ion-input>
-          <ion-button class="ion-no-margin" type="submit" color="primary" expand="block" [disabled]="customerForm.invalid">ورود به حساب کاربری</ion-button>
+          <ion-input formControlName="srName" errorText="نام کاربری صحیح نیست" [clearInput]="true" aria-label="نام کاربری" color="dark" placeholder="نام کاربری"></ion-input>
+          <ion-input formControlName="srPass" errorText="کلمه عبور صحیح نیست" [clearInput]="true" aria-label="رمز عبور" color="dark" placeholder="رمز عبور"></ion-input>
+          <ion-button class="ion-no-margin" [ngClass]="{'loading': showSpinner}" type="submit" color="primary" expand="block" [disabled]="customerForm.invalid || avoidRepetition">
+            <ion-spinner name="dots" color="light" duration="1000"></ion-spinner>
+            <span>ورود به حساب کاربری</span>
+          </ion-button>
         </form>
     </div>
   </div>
-
-
 </ion-content>
+<ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" message="نام کاربری یا کلمه عبور صحیح نیست." [duration]="5000"></ion-toast>

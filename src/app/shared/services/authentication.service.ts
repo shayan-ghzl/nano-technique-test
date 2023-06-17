@@ -1,74 +1,71 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
-import { CurrentUser } from '../models/models';
+import { BehaviorSubject, Observable, catchError, of, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AuthState, CurrentUser } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  // CurrentUser Store
-  token = '';
-  private currentUserSource = new BehaviorSubject<CurrentUser>('pending');
-  getCurrentUser$: Observable<CurrentUser> = this.currentUserSource.asObservable().pipe(
-    tap((value) => {
-      // @ts-ignore
-      if (value.token) { this.token = value.token; }
-      else { this.token = ''; }
-    }),
-  );
+  private authStateSource = new BehaviorSubject<AuthState | null>(null);
+
+  getAuthState$: Observable<AuthState | null> = this.authStateSource.asObservable();
   
-  private setCurrentUser(currentUser: CurrentUser) {
-    this.currentUserSource.next(currentUser);
+  private setAuthState(authState: AuthState) {
+    this.authStateSource.next(authState);
   }
+
+  token = '';
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {
 
-  /*
-   - If it return Observable<false> means the user is not authenticated
-     and if it return Observable<true> means the user is authenticated.
-   - It also handles localStorage and also currentUser in the store.
-  */
-  getCurrentUser() {
-    let temp = localStorage.getItem('ut');
-    if (temp || this.token) {
-      return this.http.get<any>(environment.apiUrl + 'Users/GetCurrentUser').pipe(
-        tap((value) => {
-          console.log(value, 'getCurrentUser');
-        }),
-        map((response) => {
-          if (response.issuccess) {
-            this.login(response);
-            return true;
-          }
-          localStorage.removeItem('ut');
-          this.setCurrentUser('rejected');
-          return false;
-        }),
-        catchError(() => {
-          this.setCurrentUser('rejected');
-          return of(false);
-        })
-      );
-    }
-    return of(false);
   }
 
+  intervalId: any;
+  login(authInput: { srName: string; srPass: string }) {
+    return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-login', authInput).pipe(
+      catchError(() => of(false)),
+      tap(response => {
+        if (response) {
+          this.token = (response as CurrentUser).Value.Token;
+          this.setAuthState(response as CurrentUser);
+          console.log(JSON.parse(response), 'response');
+          
+          this.intervalId = setInterval(() => { 
+            this.refreshToken((response as CurrentUser).Value.RefreshToken).subscribe();
+          }, 20000);
+          this.router.navigateByUrl('/tabs/home');
+        }
+      }),
+    );
+  }
+
+  refreshToken(refreshToken: string){
+    console.log(refreshToken);
+    return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-refresh-token', null, { params: { 'RToken': refreshToken } }).pipe(
+      take(1),
+      // this.token = (response as CurrentUser).Value.Token;
+      tap(console.log)
+    );  
+  }
 
   logout() {
-    localStorage.removeItem('ut');
-    this.setCurrentUser('pending');
+    return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-logout', null).pipe(
+      tap(console.log)
+    );
+  }
+
+  logoutDone() {
+    this.token = '';
+    this.setAuthState(null);
+    clearInterval(this.intervalId);
     this.router.navigateByUrl('/login');
   }
 
-  login(response: any) {
-    localStorage.setItem('ut', response.data.token);
-    this.setCurrentUser(response.data);
-  }
 }

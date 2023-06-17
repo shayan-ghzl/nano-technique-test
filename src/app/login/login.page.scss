@@ -59,3 +59,21 @@ ion-input{
         margin: 0 9px;
     }
 }
+ion-spinner {
+    width: 60px;
+    height: 60px;
+}
+ion-spinner{
+    display: none;
+}
+span{
+    display: block;
+}
+.loading{
+    ion-spinner{
+        display: block;
+    }
+    span{
+        display: none;
+    }
+}
