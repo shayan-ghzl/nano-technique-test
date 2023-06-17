@@ -11,12 +11,17 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: '',
+    path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+  },
+  { 
+    path: '', 
+    pathMatch: 'full',
+    redirectTo: '/login'
   },
   {
     path: '**',
-    redirectTo: 'start'
+    redirectTo: '/start'
   },
 ];
 
