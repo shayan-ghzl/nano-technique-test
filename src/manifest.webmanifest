@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Nanotech",
+  "short_name": "Nanotech",
   "theme_color": "#ce472b",
   "background_color": "#ce472b",
   "display": "standalone",
