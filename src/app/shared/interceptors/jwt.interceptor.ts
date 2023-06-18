@@ -1,36 +1,32 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router,
-  ) { }
+  ) { 
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-    const token = localStorage.getItem('ut');
-    
-    if (this.authenticationService.token || token) {
+    if (this.authenticationService.token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.authenticationService.token || token}`
+          Authorization: `Bearer ${this.authenticationService.token}`
         }
       });
     } else {
-      this.router.navigateByUrl('/login');
+      this.authenticationService.logoutDone();
     }
-    
+
     return next.handle(request);
   }
 }

@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, of, take, tap } from 'rxjs';
+import { NavController } from '@ionic/angular';
+import * as pako from 'pako';
+import { BehaviorSubject, Observable, catchError, of, take, tap, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthState, CurrentUser } from '../models/models';
+import jwt_decode from "jwt-decode";
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,25 +25,21 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    // private router: Router,
+    private navController: NavController,
   ) {
 
   }
 
-  intervalId: any;
   login(authInput: { srName: string; srPass: string }) {
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-login', authInput).pipe(
+      timeout(60000),
       catchError(() => of(false)),
       tap(response => {
         if (response) {
-          this.token = (response as CurrentUser).Value.Token;
-          this.setAuthState(response as CurrentUser);
-          console.log(JSON.parse(response), 'response');
-          
-          this.intervalId = setInterval(() => { 
-            this.refreshToken((response as CurrentUser).Value.RefreshToken).subscribe();
-          }, 20000);
-          this.router.navigateByUrl('/tabs/home');
+          const compressed = pako.deflate(response.Value);
+          const restored = JSON.parse(pako.inflate(compressed, { to: 'string' }));
+          this.loginDone({...response, Value: restored});
         }
       }),
     );
@@ -50,22 +49,62 @@ export class AuthenticationService {
     console.log(refreshToken);
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-refresh-token', null, { params: { 'RToken': refreshToken } }).pipe(
       take(1),
-      // this.token = (response as CurrentUser).Value.Token;
-      tap(console.log)
+      timeout(60000),
+      catchError(() => of(false)),
+      tap(response => {
+        if (response) {
+          const compressed = pako.deflate(response.Value);
+          const restored = JSON.parse(pako.inflate(compressed, { to: 'string' }));
+          this.token = restored.Token;
+        }else{
+          this.logoutDone();
+        }
+      }),
     );  
   }
 
   logout() {
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-logout', null).pipe(
-      tap(console.log)
+      timeout(60000),
+      catchError(() => of(false)),
+      tap(response => {
+        if (response) {
+          this.logoutDone();
+        }
+      }),
     );
   }
 
-  logoutDone() {
+  logoutDone(fromGuard = false) {
     this.token = '';
-    this.setAuthState(null);
+    if (!fromGuard) {
+      this.setAuthState(null);
+    }
     clearInterval(this.intervalId);
-    this.router.navigateByUrl('/login');
+    // this.router.navigateByUrl('/login');
+    // this.navController.pop().then(() => {
+    //   this.navController.navigateRoot("/login");
+    // });
+    //   this.navController.navigateRoot("/login");
+    this.navController.navigateRoot("/login");
+  }
+
+  intervalId: any;
+  loginDone(response: CurrentUser) {
+    const decoded: any = jwt_decode(response.Value.Token);
+    if (decoded.iss === 'NanoTechnic.ir') {
+      this.token = response.Value.Token;
+      this.setAuthState({...response, Key: decoded.srCode});
+      this.intervalId = setInterval(() => { 
+        this.refreshToken(response.Value.RefreshToken).subscribe();
+      }, 900000);
+      // this.router.navigateByUrl('/tabs/home');
+      // this.navController.pop().then(() => {
+      //   this.navController.navigateForward("/tabs/home");
+      // });
+      //   this.navController.navigateForward("/tabs/home");
+      this.navController.navigateRoot("/tabs/home");
+    }
   }
 
 }

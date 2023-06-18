@@ -1,16 +1,15 @@
 import { inject } from '@angular/core';
 import { CanMatchFn } from '@angular/router';
-import { map } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
+import { map } from 'rxjs';
 
-export const AuthenticationGuard: CanMatchFn = (route, segments) => {
+export const LoggedinGuard: CanMatchFn = (route, segments) => {
   const authenticationService = inject(AuthenticationService);
   return authenticationService.getAuthState$.pipe(
     map((value) => {
-      if (value) {
+      if (value === null) {
         return true;
       }
-      authenticationService.logoutDone(true);
       return false;
     })
   );
