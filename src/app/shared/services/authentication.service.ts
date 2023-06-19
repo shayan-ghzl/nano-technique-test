@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import * as pako from 'pako';
-import { BehaviorSubject, Observable, catchError, of, take, tap, timeout } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, take, tap, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthState, CurrentUser } from '../models/models';
 import jwt_decode from "jwt-decode";
@@ -33,10 +33,11 @@ export class AuthenticationService {
 
   login(authInput: { srName: string; srPass: string }) {
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-login', authInput).pipe(
-      timeout(60000),
-      catchError(() => of(false)),
+      timeout(20000),
+      map(response => ({...response, customStatus: true})),
+      catchError((error) => of({...error, customStatus: false})),
       tap(response => {
-        if (response) {
+        if (response.customStatus) {
           const compressed = pako.deflate(response.Value);
           const restored = JSON.parse(pako.inflate(compressed, { to: 'string' }));
           this.loginDone({...response, Value: restored});
@@ -49,7 +50,7 @@ export class AuthenticationService {
     console.log(refreshToken);
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-refresh-token', null, { params: { 'RToken': refreshToken } }).pipe(
       take(1),
-      timeout(60000),
+      timeout(20000),
       catchError(() => of(false)),
       tap(response => {
         if (response) {
@@ -65,7 +66,7 @@ export class AuthenticationService {
 
   logout() {
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-logout', null).pipe(
-      timeout(60000),
+      timeout(20000),
       catchError(() => of(false)),
       tap(response => {
         if (response) {
