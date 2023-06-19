@@ -1,0 +1,40 @@
+<div class="ion-margin-bottom">
+  <ion-label class="fw-bold ion-text-center">آپلود تصویر فرم انجام پروژه*</ion-label>
+  <ion-row class="ion-justify-content-center">
+    <ion-thumbnail (click)="selectImage(0)">
+      <ng-container *ngIf="imagesInterface[0] as imageSrc;else addIconTemplate">
+        <img [src]="imageSrc" alt="added image">
+      </ng-container>
+    </ion-thumbnail>
+  </ion-row>
+</div>
+<div class="ion-margin-bottom">
+  <ion-label class="fw-bold ion-text-center">آپلود تصاویر محل انجام پروژه</ion-label>
+  <ion-row class="ion-justify-content-between">
+    <ion-thumbnail (click)="selectImage(1)">
+      <ng-container *ngIf="imagesInterface[1] as imageSrc;else addIconTemplate">
+        <img [src]="imageSrc" alt="added image">
+      </ng-container>
+    </ion-thumbnail>
+    <ion-thumbnail (click)="selectImage(2)">
+      <ng-container *ngIf="imagesInterface[2] as imageSrc;else addIconTemplate">
+        <img [src]="imageSrc" alt="added image">
+      </ng-container>
+    </ion-thumbnail>
+  </ion-row>
+  <ion-row class="ion-justify-content-between">
+    <ion-thumbnail (click)="selectImage(3)">
+      <ng-container *ngIf="imagesInterface[3] as imageSrc;else addIconTemplate">
+        <img [src]="imageSrc" alt="added image">
+      </ng-container>
+    </ion-thumbnail>
+    <ion-thumbnail (click)="selectImage(4)">
+      <ng-container *ngIf="imagesInterface[4] as imageSrc;else addIconTemplate">
+        <img [src]="imageSrc" alt="added image">
+      </ng-container>
+    </ion-thumbnail>
+  </ion-row>
+</div>
+<ng-template #addIconTemplate>
+  <i class="nanotech-icon nanotech-icon-add"></i>
+</ng-template>
