@@ -47,6 +47,22 @@
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
 }
+ion-button.has-spinner{
+    ion-spinner{
+        display: none;
+    }
+    span{
+        display: block;
+    }
+    &.loading{
+        ion-spinner{
+            display: block;
+        }
+        span{
+            display: none;
+        }
+    }
+  }
 // --custom-gray-50: #1e1e1e;
 // --custom-gray-100: #2a2a2a;
 // --custom-gray-150: #363636;
