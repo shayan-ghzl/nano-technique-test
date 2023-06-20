@@ -1,148 +1,61 @@
 <ion-content>
   <ion-text class="ion-text-center" color="dark">
-    <h5 class="fw-bold">گزارش عملکرد ماهانه</h5>
+    <h5 class="fw-bold content-heading">گزارش عملکرد ماهانه</h5>
   </ion-text>
-  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+  <ion-refresher slot="fixed" #refresher (ionRefresh)="handleRefresh()">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card>
-    <ion-card-header class="ion-no-padding">
-      <ion-text class="ion-text-center" color="dark">
-        <h6>پروژه جهاد دانشگاهی</h6>
-      </ion-text>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
 
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-calender"></i>
-          <span>1401/09/30</span>
-        </ion-col>
-        
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-time"></i>
-          <span>2 ساعت</span>
-        </ion-col>
-      </ion-row>
+  <ng-container *ngIf="items as list;else loadingTemplate">
 
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header class="ion-no-padding">
-      <ion-text class="ion-text-center" color="dark">
-        <h6>پروژه جهاد دانشگاهی</h6>
-      </ion-text>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
+    <ng-container *ngIf="list.length;else emptyTableTemplate">
+  
+      <ion-card *ngFor="let item of list; let index">
+        <ion-card-header class="ion-no-padding">
+          <ion-text class="ion-text-center" color="dark">
+            <h6 class="card-heading">پروژه جهاد دانشگاهی</h6>
+          </ion-text>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+    
+            <ion-col>
+              <i class="nanotech-icon nanotech-icon-calender"></i>
+              <span>1401/09/30</span>
+            </ion-col>
+            
+            <ion-col>
+              <i class="nanotech-icon nanotech-icon-time"></i>
+              <span>2 ساعت</span>
+            </ion-col>
+          </ion-row>
+    
+        </ion-card-content>
+      </ion-card>
 
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-calender"></i>
-          <span>1401/09/30</span>
-        </ion-col>
-        
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-time"></i>
-          <span>2 ساعت</span>
-        </ion-col>
-      </ion-row>
+      <ion-row class="ion-justify-content-between">
+        <span class="rect-bg">
+          تعداد پروژه: 10
+        </span>
+        <span class="rect-bg">
+          جمع کل ساعات: 25
+        </span>
+       </ion-row>
 
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header class="ion-no-padding">
-      <ion-text class="ion-text-center" color="dark">
-        <h6>پروژه جهاد دانشگاهی</h6>
-      </ion-text>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
+    </ng-container>
 
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-calender"></i>
-          <span>1401/09/30</span>
-        </ion-col>
-        
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-time"></i>
-          <span>2 ساعت</span>
-        </ion-col>
-      </ion-row>
-
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header class="ion-no-padding">
-      <ion-text class="ion-text-center" color="dark">
-        <h6>پروژه جهاد دانشگاهی</h6>
-      </ion-text>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
-
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-calender"></i>
-          <span>1401/09/30</span>
-        </ion-col>
-        
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-time"></i>
-          <span>2 ساعت</span>
-        </ion-col>
-      </ion-row>
-
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header class="ion-no-padding">
-      <ion-text class="ion-text-center" color="dark">
-        <h6>پروژه جهاد دانشگاهی</h6>
-      </ion-text>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
-
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-calender"></i>
-          <span>1401/09/30</span>
-        </ion-col>
-        
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-time"></i>
-          <span>2 ساعت</span>
-        </ion-col>
-      </ion-row>
-
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header class="ion-no-padding">
-      <ion-text class="ion-text-center" color="dark">
-        <h6>پروژه جهاد دانشگاهی</h6>
-      </ion-text>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
-
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-calender"></i>
-          <span>1401/09/30</span>
-        </ion-col>
-        
-        <ion-col>
-          <i class="nanotech-icon nanotech-icon-time"></i>
-          <span>2 ساعت</span>
-        </ion-col>
-      </ion-row>
-
-    </ion-card-content>
-  </ion-card>
-  <ion-row class="ion-justify-content-between">
-      <span class="rect-bg">
-        تعداد پروژه: 10
-      </span>
-      <span class="rect-bg">
-        جمع کل ساعات: 25
-      </span>
-  </ion-row>
+  </ng-container>
+  
 </ion-content>
+
+<ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" message="خطایی رخ داد لطفا دوباره امتحان کنید." [duration]="5000"></ion-toast>
+
+<ng-template #loadingTemplate>
+  <ion-spinner name="circles" color="primary" duration="1000"></ion-spinner>
+</ng-template>
+
+<ng-template #emptyTableTemplate>
+  <ion-text class="ion-text-center" color="dark">
+      <h6 class="empty-message">جدول خالی است!</h6>
+  </ion-text>
+</ng-template>

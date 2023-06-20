@@ -4,16 +4,22 @@ ion-content{
     --padding-start: 32px;
     --padding-end: 32px;
 }
-ion-text{
-    h5{
-        margin-top: 0;
-        margin-bottom: 24px;
-    }
-    h6{
-        font-size: 14px;
-        margin-top: 12px;
-        margin-bottom: 11px;
-    }
+ion-spinner{
+    margin: 0 auto;
+    display: block;
+}
+.content-heading{
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+.card-heading{
+    font-size: 14px;
+    margin-top: 12px;
+    margin-bottom: 11px;
+}
+.empty-message{
+    font-size: 14px;
+    margin: 0;
 }
 ion-card{
     &:not(:last-of-type){
