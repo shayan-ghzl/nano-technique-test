@@ -25,7 +25,6 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    // private router: Router,
     private navController: NavController,
   ) {
 
@@ -82,12 +81,7 @@ export class AuthenticationService {
       this.setAuthState(null);
     }
     clearInterval(this.intervalId);
-    // this.router.navigateByUrl('/login');
-    // this.navController.pop().then(() => {
-    //   this.navController.navigateRoot("/login");
-    // });
-    //   this.navController.navigateRoot("/login");
-    this.navController.navigateRoot("/login");
+    this.navController.navigateRoot('/login');
   }
 
   intervalId: any;
@@ -99,12 +93,7 @@ export class AuthenticationService {
       this.intervalId = setInterval(() => { 
         this.refreshToken(response.Value.RefreshToken).subscribe();
       }, 900000);
-      // this.router.navigateByUrl('/tabs/home');
-      // this.navController.pop().then(() => {
-      //   this.navController.navigateForward("/tabs/home");
-      // });
-      //   this.navController.navigateForward("/tabs/home");
-      this.navController.navigateRoot("/tabs/home");
+      this.navController.navigateRoot('/tabs/home');
     }
   }
 
