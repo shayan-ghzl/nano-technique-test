@@ -21,7 +21,6 @@ export class HomePage implements OnDestroy{
   ) {
     // @ts-ignore:
     Date.prototype.nanoFormat = function(){
-
       let day: number | string = this.getDate();
       let month: number | string = this.getMonth() + 1;
       let year: number | string = this.getFullYear();
@@ -30,13 +29,6 @@ export class HomePage implements OnDestroy{
       month = month.toString().padStart(2, '0');
 
       return year + '-' + month + '-' + day;
-      
-      // OR
-      // const d = new Date();
-      // let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-      // let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
-      // let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-      // console.log(`${da}-${mo}-${ye}`);
    }
 
     // @ts-ignore:
@@ -67,7 +59,6 @@ export class HomePage implements OnDestroy{
     });
     this.loading.present();
   }
-
 
   ngOnDestroy(): void {
   }

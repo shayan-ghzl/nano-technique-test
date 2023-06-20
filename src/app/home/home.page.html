@@ -1,6 +1,6 @@
 <ion-content>
   <ion-text>
-    <p class="ion-no-margin">جهت گزارشگیری و انجام امور یکی از گزینه های زیر را انتخاب نمایید:</p>
+    <p class="content-heading">جهت گزارشگیری و انجام امور یکی از گزینه های زیر را انتخاب نمایید:</p>
   </ion-text>
   
 <div class="menu-container">
@@ -25,9 +25,5 @@
     خروج از حساب
   </ion-button>
 </div>
-
-<p [routerLink]="['tabs', 'score']">score</p>
-<p routerLink="/login">login</p>
-<p routerLink="/start">start</p>
 </ion-content>
 <ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" message="خطایی رخ داد لطفا دوباره امتحان کنید." [duration]="5000"></ion-toast>
