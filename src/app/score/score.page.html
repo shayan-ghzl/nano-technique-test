@@ -9,7 +9,7 @@
         <div class="segment-body-item description" [ngClass]="{'segment-active': segmentValue == '1'}">
           <ion-label class="fw-bold">نتیجه کار</ion-label>
           <ion-list>
-            <ion-radio-group value="done">
+            <ion-radio-group formControlName="ResultOfService">
               <ion-item>
                 <ion-radio value="done" justify="start" labelPlacement="end">انجام شدن</ion-radio>
               </ion-item>
@@ -28,7 +28,7 @@
           <ion-label class="fw-bold ion-margin-top">شرح فعالیت</ion-label>
           <ion-textarea
             [autoGrow]="true"
-            value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            formControlName="DescOfService"
           >
           </ion-textarea>
         </div>
@@ -54,7 +54,7 @@
 
         <div class="segment-body-item" [ngClass]="{'segment-active': segmentValue == '3'}">
           <app-score-upload-image formControlName="pImage"></app-score-upload-image>
-          <ion-button type="submit" class="ion-no-margin ion-margin-top has-spinner" [ngClass]="{'loading': showSpinner}" type="submit" color="primary" expand="block" [disabled]="scoreForm.invalid || avoidRepetition">
+          <ion-button type="submit" class="ion-no-margin ion-margin-top has-spinner" [ngClass]="{'loading': showSpinner}" type="submit" color="primary" expand="block" [disabled]="scoreForm.invalid || showSpinner">
             <ion-spinner name="dots" color="light" duration="1000"></ion-spinner>
             <span>تاییدیه نهایی</span>
           </ion-button>
@@ -65,3 +65,5 @@
     </ion-card-content>  
   </ion-card>
 </ion-content>
+<ion-toast [isOpen]="showToastMessage" (didDismiss)="showToastMessage = false" color="dark" [message]="toastMessage" [duration]="5000"></ion-toast>
+

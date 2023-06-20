@@ -28,7 +28,7 @@ export class StarRatingComponent implements ControlValueAccessor {
       isActive: false
     },
     {
-      rate: 5,
+      rate: 4,
       isActive: false
     },
     {
@@ -81,5 +81,6 @@ export class StarRatingComponent implements ControlValueAccessor {
       this.onChange(this.rate);
     }
   }
+
 
 }

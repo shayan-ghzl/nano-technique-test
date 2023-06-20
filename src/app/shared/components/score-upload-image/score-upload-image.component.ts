@@ -56,8 +56,8 @@ export class ScoreUploadImageComponent implements ControlValueAccessor {
       if (image.webPath) {
         this.images.push(image.webPath);
         this.imagesInterface[index] = image.webPath;
+        this.onChange(this.images);
       }
-      this.onChange(this.images);
     }
   }
 

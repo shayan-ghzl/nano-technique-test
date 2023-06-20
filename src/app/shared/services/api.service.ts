@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { catchError, of, tap, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,7 +16,9 @@ export class ApiService {
       params = params.append(key, value);
     }
     return this.http.get<any>(environment.apiUrl + '/api/Servicer/get-all-ready-to-install-device-list', { params: params }).pipe(
-      tap(console.log)
+      tap(console.log),
+      timeout(20000),
+      catchError(() => of(false)),
     );
   }
   
@@ -26,7 +28,17 @@ export class ApiService {
       params = params.append(key, value);
     }
     return this.http.get<any>(environment.apiUrl + '/api/Servicer/get-all-installed-device-list-by-servicer', { params: params }).pipe(
-      tap(console.log)
+      tap(console.log),
+      timeout(20000),
+      catchError(() => of(false)),
+    );
+  }
+
+  postInstallationResult(parameters: any) {
+    return this.http.post<any>(environment.apiUrl + '/api/InstallationResult/finish-new-installation-by-servicer', parameters).pipe(
+      tap(console.log),
+      timeout(20000),
+      catchError(() => of(false)),
     );
   }
 
