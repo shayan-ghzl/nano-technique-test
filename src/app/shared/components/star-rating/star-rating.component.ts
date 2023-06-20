@@ -82,15 +82,23 @@ export class StarRatingComponent implements ControlValueAccessor {
     }
   }
   
-  // Touchmove(e: any){
-  //   const touch = e.touches[0];
-  //   const targetLabel = document.elementFromPoint(touch.clientX, touch.clientY);
-  //   const rect = e.currentTarget.getBoundingClientRect();
-  //   const x = touch.clientX - rect.left;
-  //   this.list.forEach((element) => {
-  //     element.isActive = false;
-  //   });
-  //   this.list[Math.floor(x/30)].isActive = true;
-  // }
+  timerId: any;
+  handleTouchMove(event: TouchEvent, container: HTMLElement) {
+    event.preventDefault();
+    const containerRect = container.getBoundingClientRect();
+    const diff = event.touches[0].clientX - containerRect.left;
+    const clientX = (diff > 149) ? 149 : (diff < 0) ? 0 : diff;
+    const rating = Math.floor(clientX / 30) + 1;
+    this.list.forEach((element) => {
+      element.isActive = false;
+    });
+    const item = this.list[Math.abs(rating - 5)];
+    item.isActive = true;
+    clearTimeout(this.timerId);
+    this.timerId = setTimeout(() => {
+      this.rate = item.rate;
+      this.onChange(this.rate);
+    }, 500);
+  }
 
 }
