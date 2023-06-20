@@ -4,17 +4,22 @@ ion-content{
     --padding-start: 32px;
     --padding-end: 32px;
 }
-
+ion-spinner{
+    margin: 0 auto;
+    display: block;
+}
 ion-item{
     font-size: 13px;
     color: #707070;
 }
-ion-text{
-    h6{
-        font-size: 14px;
-        margin-top: 10px;
-        margin-bottom: 8px;
-    }
+.card-heading{
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+.empty-message{
+    font-size: 14px;
+    margin: 0;
 }
 ion-col{
     --ion-grid-column-padding-xs: 2px;

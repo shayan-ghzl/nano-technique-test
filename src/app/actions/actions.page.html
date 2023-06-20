@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+  <ion-refresher slot="fixed" #refresher (ionRefresh)="handleRefresh()">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
@@ -7,11 +7,11 @@
 
       <ng-container *ngIf="list.length;else emptyTableTemplate">
     
-        <ion-card *ngFor="let item of list; let index" [routerLink]="['/tabs', 'single-action', '888']">
+        <ion-card *ngFor="let item of list; let index" [routerLink]="['/tabs', 'single-action', item.idrRid]">
           <ion-card-header color="primary" class="ion-no-padding">
             <ion-text class="ion-text-center">
-              <h6 class="fw-bold">
-                احمد احمدیان
+              <h6 class="fw-bold card-heading">
+                {{item.idrClientName}}
               </h6>
             </ion-text>
           </ion-card-header>
@@ -26,14 +26,14 @@
                     <i class="nanotech-icon"></i>
                     <span>
                       <i class="nanotech-icon nanotech-icon-tick fw-bold"></i>
-                      1401/09/10
+                      {{item.idrDateOfService}}
                     </span>
                   </ion-col>
                   <ion-col>
                     <i class="nanotech-icon"></i>
                     <span>
                       <i class="nanotech-icon nanotech-icon-tick fw-bold"></i>
-                      1401/09/12
+                      {{item.idrTimeOfService}}
                     </span>
                   </ion-col>
                 </ion-row>
@@ -66,13 +66,13 @@
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-
+<ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" message="خطایی رخ داد لطفا دوباره امتحان کنید." [duration]="5000"></ion-toast>
 <ng-template #loadingTemplate>
   <ion-spinner name="circles" color="primary" duration="1000"></ion-spinner>
 </ng-template>
 
 <ng-template #emptyTableTemplate>
-    <ion-text class="empty-message" color="dark">
-        <h4>جدول خالی است!</h4>
-    </ion-text>
+  <ion-text class="ion-text-center" color="dark">
+      <h6 class="empty-message">جدول خالی است!</h6>
+  </ion-text>
 </ng-template>
