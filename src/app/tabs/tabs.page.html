@@ -6,7 +6,12 @@
           <img alt="avatar icon" src="./assets/icon/avatar.svg" />
         </ion-thumbnail>
         <ion-text color="light" class="ion-text-center">
-          <h6 class="ion-no-margin ion-margin-top">خوش آمدید <ion-text color="warning" class="fw-bold">ادمین</ion-text></h6>
+          <h6 class="ion-no-margin ion-margin-top">خوش آمدید <ion-text color="warning" class="fw-bold">
+            <ng-container *ngTemplateOutlet="nameTemplate; context:{$implicit: (currentUser$ | async)!.Value}"></ng-container>
+            <ng-template #nameTemplate let-admin>
+              {{ admin.SrName + ' ' + admin.SrFamil }}
+            </ng-template>
+          </ion-text></h6>
         </ion-text>
       </div>
   
@@ -25,7 +30,7 @@
   </ion-tab-button>
   
   <!-- backward-forward-back -->
-  <ion-tab-button class="jewel-style" [routerLink]="['tabs', 'home']" routerLinkActive="tab-selected" routerDirection="root">
+  <ion-tab-button class="jewel-style" [routerLink]="['/tabs', 'home']" routerLinkActive="tab-selected" routerDirection="root">
     <i aria-hidden="true" class="nanotech-icon nanotech-icon-home"></i>
   </ion-tab-button>
   
