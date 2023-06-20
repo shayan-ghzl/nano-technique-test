@@ -23,8 +23,8 @@
         value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       >
       </ion-textarea>
-      <ion-button color="primary" expand="block" class="ion-no-margin ion-margin-bottom" id="present-alert">شروع به انجام کار</ion-button>
-      <ion-button color="medium" expand="block" class="ion-no-margin" disabled>پایان پروژه</ion-button>
+      <ion-button [color]="(hasActionStarted) ? 'medium' : 'primary'" expand="block" class="ion-no-margin ion-margin-bottom" [disabled]="hasActionStarted" id="present-alert">شروع به انجام کار</ion-button>
+      <ion-button [color]="(hasActionStarted) ? 'primary' : 'medium'" expand="block" class="ion-no-margin" [routerLink]="(hasActionStarted) ? '/tabs/score' : null" routerDirection="forward" [disabled]="!hasActionStarted">پایان پروژه</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
