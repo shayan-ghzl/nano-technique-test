@@ -19,8 +19,8 @@
           <p class="ion-text-center">جهت گزارشگیری و انجام امور یکی از گزینه های زیر را انتخاب نمایید:</p>
         </ion-text>
         <form [formGroup]="customerForm" (ngSubmit)="submit()" autocomplete="off">
-          <ion-input formControlName="srName" errorText="نام کاربری صحیح نیست" [clearInput]="true" aria-label="نام کاربری" color="dark" placeholder="نام کاربری"></ion-input>
-          <ion-input formControlName="srPass" errorText="کلمه عبور صحیح نیست" [clearInput]="true" aria-label="رمز عبور" color="dark" placeholder="رمز عبور" enterkeyhint="done"></ion-input>
+          <ion-input type="text" formControlName="srName" errorText="نام کاربری صحیح نیست" [clearInput]="true" aria-label="نام کاربری" color="dark" placeholder="نام کاربری"></ion-input>
+          <ion-input type="password" formControlName="srPass" errorText="کلمه عبور صحیح نیست" [clearInput]="true" aria-label="رمز عبور" color="dark" placeholder="رمز عبور" enterkeyhint="done"></ion-input>
           <ion-button class="ion-no-margin has-spinner" [ngClass]="{'loading': showSpinner}" type="submit" color="primary" expand="block" [disabled]="customerForm.invalid || avoidRepetition">
             <ion-spinner name="dots" color="light" duration="1000"></ion-spinner>
             <span>ورود به حساب کاربری</span>

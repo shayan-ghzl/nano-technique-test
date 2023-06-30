@@ -42,6 +42,9 @@
         </span>
        </ion-row>
 
+       <ion-infinite-scroll (ionInfinite)="onIonInfinite()" #infiniteScroll>
+         <ion-infinite-scroll-content></ion-infinite-scroll-content>
+       </ion-infinite-scroll>
     </ng-container>
 
   </ng-container>

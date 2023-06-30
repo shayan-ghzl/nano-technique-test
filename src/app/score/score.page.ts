@@ -10,6 +10,7 @@ import { Subscription, tap } from 'rxjs';
   selector: 'app-score',
   templateUrl: './score.page.html',
   styleUrls: ['./score.page.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScorePage implements OnInit, OnDestroy {
 
@@ -60,7 +61,7 @@ export class ScorePage implements OnInit, OnDestroy {
   }
 
   segmentChanged() {
-    this.content.scrollToTop(500);
+    this.content.scrollToTop();
   }
 
   async submit(){
@@ -91,9 +92,14 @@ export class ScorePage implements OnInit, OnDestroy {
   }
 
   async printCurrentPosition(){
-    const coordinates = await Geolocation.getCurrentPosition();
-    this.scoreForm.patchValue({'SrrPlaceOfEndingInstall': `${coordinates.coords.latitude}#${coordinates.coords.longitude}`}, { emitEvent: false });
-    console.log('Current position:', coordinates);
+    await Geolocation.getCurrentPosition()
+      .then((coordinates) => {
+        this.scoreForm.patchValue({'SrrPlaceOfEndingInstall': `${coordinates.coords.latitude}#${coordinates.coords.longitude}`}, { emitEvent: false });
+        console.log('Current position:', coordinates);
+      })
+      .catch((error) => {
+        console.log('display a button to retry geolocation');
+      });
   }
 
   ngOnDestroy(): void {

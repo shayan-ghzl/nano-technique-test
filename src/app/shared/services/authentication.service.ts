@@ -46,7 +46,6 @@ export class AuthenticationService {
   }
 
   refreshToken(refreshToken: string){
-    console.log(refreshToken);
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-refresh-token', null, { params: { 'RToken': refreshToken } }).pipe(
       take(1),
       timeout(20000),

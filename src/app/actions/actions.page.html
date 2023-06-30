@@ -7,8 +7,8 @@
 
       <ng-container *ngIf="list.length;else emptyTableTemplate">
     
-        <ion-card *ngFor="let item of list; let index" [routerLink]="['/tabs', 'single-action', item.idrRid]">
-          <ion-card-header color="primary" class="ion-no-padding">
+        <ion-card *ngFor="let item of list; let index">
+          <ion-card-header color="primary" class="ion-no-padding" [routerLink]="['/tabs', 'single-action', item.idrRid]" routerDirection="forward">
             <ion-text class="ion-text-center">
               <h6 class="fw-bold card-heading">
                 {{item.idrClientName}}
@@ -16,7 +16,7 @@
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
-            <ion-item lines="none" button detail="false">
+            <ion-item lines="none" button detail="false" [routerLink]="['/tabs', 'single-action', item.idrRid]" routerDirection="forward">
               <ion-thumbnail slot="start">
                 <img alt="device icon" src="./assets/icon/device-alt.svg" />
               </ion-thumbnail>
@@ -55,18 +55,21 @@
                 </ion-row>
               </ion-label>
             </ion-item>
+          <ion-row class="ion-justify-content-end toggle-row">
+            <ion-toggle checked="false" [disabled]="item.disabled" (ionChange)="actionActived(item)"></ion-toggle>
+          </ion-row>
           </ion-card-content>
         </ion-card>
 
+        <ion-infinite-scroll (ionInfinite)="onIonInfinite()" #infiniteScroll>
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </ng-container>
 
   </ng-container>
 
-  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>
-<ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" message="خطایی رخ داد لطفا دوباره امتحان کنید." [duration]="5000"></ion-toast>
+<ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" [message]="toastMessage" [duration]="5000"></ion-toast>
 <ng-template #loadingTemplate>
   <ion-spinner name="circles" color="primary" duration="1000"></ion-spinner>
 </ng-template>

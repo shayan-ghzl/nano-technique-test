@@ -12,7 +12,8 @@ import { Camera, CameraResultType } from '@capacitor/camera';
       multi: true,
       useExisting: ScoreUploadImageComponent
     }
-  ]
+  ],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScoreUploadImageComponent implements ControlValueAccessor {
 
@@ -48,16 +49,21 @@ export class ScoreUploadImageComponent implements ControlValueAccessor {
   async selectImage(index: number) {
     this.markAsTouched();
     if (!this.disabled) {
-      const image = await Camera.getPhoto({
+      await Camera.getPhoto({
         quality: 100,
         allowEditing: false,
         resultType: CameraResultType.Uri
+      })
+      .then((image) => {
+        if (image.webPath) {
+          this.images.push(image.webPath);
+          this.imagesInterface[index] = image.webPath;
+          this.onChange(this.images);
+        }
+      })
+      .catch((error) => {
+        console.log('upload photo canceled');
       });
-      if (image.webPath) {
-        this.images.push(image.webPath);
-        this.imagesInterface[index] = image.webPath;
-        this.onChange(this.images);
-      }
     }
   }
 
