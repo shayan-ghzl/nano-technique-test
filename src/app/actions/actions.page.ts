@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import * as pako from 'pako';
-import { EMPTY, Subscription, mergeMap, take } from 'rxjs';
+import { EMPTY, Subscription, mergeMap, take, tap } from 'rxjs';
 import { ApiService } from '../shared/services/api.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 
@@ -25,8 +25,11 @@ export class ActionsPage implements OnInit, OnDestroy {
   showToastError = false;
   toastMessage = '';
 
+  assignedItem = false;
   PageNum = 1;
   totalPages = 1;
+
+  servicerID!: number;
 
   subscription = new Subscription();
 
@@ -35,13 +38,13 @@ export class ActionsPage implements OnInit, OnDestroy {
     private apiService: ApiService,
     private authenticationService: AuthenticationService,
   ) {
-    console.log(this.router.url.includes('today'));
   }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
+    this.assignedItem = this.router.url.includes('today');
     this.getActions();
   }
 
@@ -53,7 +56,8 @@ export class ActionsPage implements OnInit, OnDestroy {
      this.authenticationService.getAuthState$.pipe(
        take(1),
        mergeMap(authState => {
-         return this.apiService.getReadyDevices({ 'ServicerID': authState!.Key, 'AzDateCTI': '2023-01-01', 'TaDateCTI': '2023-06-30', 'Skip': -1, 'PageNum': this.PageNum }).pipe(
+        this.servicerID = authState!.Key;
+         return this.apiService.getReadyDevices({ 'ServicerID': this.servicerID, 'AzDateCTI': '2023-01-01', 'TaDateCTI': '2023-06-30', 'Skip': -1, 'PageNum': this.PageNum, 'AcceptedKind': this.assignedItem ? 'A' : 'N' }).pipe(
           mergeMap((response) => {
             let restored: any[] = [];
             if (response) {
@@ -79,7 +83,7 @@ export class ActionsPage implements OnInit, OnDestroy {
               this.infiniteSctoll.complete();
             }
             if (restored.length) {
-              return this.apiService.postViewdPlans({ 'ServicerID': authState!.Key, 'json_IDRList': JSON.stringify(restored.map(x => ({ 'idrRid': x.idrRid }))) });
+              return this.apiService.postViewdPlans({ 'ServicerID': this.servicerID, 'json_IDRList': JSON.stringify(restored.map(x => ({ 'idrRid': x.idrRid }))) });
             } 
             return EMPTY;
            })
@@ -103,10 +107,27 @@ export class ActionsPage implements OnInit, OnDestroy {
     }
   }
 
-  actionActived(item: any) {
-   console.log(item);
-   this.toastMessage = 'نصب این دستگاه به شما واگذار شد.';
-   this.showToastError = true;
+  actionActived(event: any, item: any) {
+    item.disabled = true;
+    this.subscription.add(
+      this.apiService.postAcceptPlanToInstall({
+        "servicerID": this.servicerID,
+        "json_IDRList": JSON.stringify([{ idrRid: item.idrRid }])
+      }).pipe(
+        tap(response => {
+          if (response) {
+            this.toastMessage = 'نصب این دستگاه به شما واگذار شد.';
+            
+          } else {
+            this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
+            item.disabled = false;
+            const toggle = event.target as HTMLIonToggleElement;
+            toggle.checked = !toggle.checked;
+          }
+          this.showToastError = true;
+        })
+      ).subscribe()
+   );
   }
 
   ngOnDestroy(): void {

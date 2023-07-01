@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 import { ApiService } from '../shared/services/api.service';
 import { NavController } from '@ionic/angular';
@@ -8,11 +8,11 @@ import { NavController } from '@ionic/angular';
   selector: 'app-single-action',
   templateUrl: './single-action.page.html',
   styleUrls: ['./single-action.page.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SingleActionPage implements OnInit, OnDestroy {
 
   hasActionStarted = false;
+  assignedItem = false;
 
   alertButtons = [
     {
@@ -31,6 +31,7 @@ export class SingleActionPage implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private apiService: ApiService,
     private navController: NavController,
@@ -45,6 +46,7 @@ export class SingleActionPage implements OnInit, OnDestroy {
   }
   
   ionViewWillEnter() {
+    this.assignedItem = this.router.url.includes('read-only');
     const deviceId = +(this.activatedRoute.snapshot.paramMap.get('actionId') || 'null');
     if (isNaN(deviceId)) {
         this.navController.navigateRoot('/tabs/home');
@@ -54,10 +56,9 @@ export class SingleActionPage implements OnInit, OnDestroy {
       this.apiService.getDeviceById(deviceId).pipe(
         tap(response => {
           if (response) {
-            
+            console.log(response);
           } else {
             this.navController.navigateRoot('/tabs/home');
-            
           }
         })
       ).subscribe()

@@ -4,6 +4,16 @@
   </ion-text>
   
 <div class="menu-container">
+
+  <ion-card>
+    <ion-item button lines="none" class="text-xs" [routerLink]="['/tabs', 'actions', 'today']" routerDirection="forward">
+      <ion-thumbnail slot="start" class="ion-margin-vertical">
+        <img src="./assets/icon/device.svg" alt="device icon">
+      </ion-thumbnail>
+      <ion-label>لیست نصب های امروز</ion-label>
+    </ion-item>
+  </ion-card>
+
   <ion-card>
     <ion-item button lines="none" class="text-xs" [routerLink]="['/tabs', 'actions']" routerDirection="forward">
       <ion-thumbnail slot="start" class="ion-margin-vertical">

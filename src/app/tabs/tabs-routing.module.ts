@@ -48,6 +48,11 @@ const routes: Routes = [
             canMatch: [AuthenticationGuard]
           },
           {
+            path: ':actionId/read-only',
+            loadChildren: () => import('../single-action/single-action.module').then( m => m.SingleActionPageModule),
+            canMatch: [AuthenticationGuard]
+          },
+          {
             path: '',
             redirectTo: '/tabs/home',
             pathMatch: 'full'

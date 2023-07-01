@@ -18,17 +18,20 @@
       </div>
       <ion-label class="fw-bold ion-margin-top">شرح فعالیت</ion-label>
       <ion-textarea
-        class="ion-margin-bottom"
+        [ngClass]="{ 'ion-margin-bottom': assignedItem }"
         [autoGrow]="true"
         value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       >
       </ion-textarea>
-      <ion-button [color]="(hasActionStarted) ? 'medium' : 'primary'" expand="block" class="ion-no-margin ion-margin-bottom" [disabled]="hasActionStarted" id="present-alert">شروع به انجام کار</ion-button>
-      <ion-button [color]="(hasActionStarted) ? 'primary' : 'medium'" expand="block" class="ion-no-margin" [routerLink]="(hasActionStarted) ? '/tabs/score' : null" routerDirection="forward" [disabled]="!hasActionStarted">پایان پروژه</ion-button>
+      <ng-container *ngIf="assignedItem">
+        <ion-button [color]="(hasActionStarted) ? 'medium' : 'primary'" expand="block" class="ion-no-margin ion-margin-bottom" [disabled]="hasActionStarted" id="present-alert">شروع به انجام کار</ion-button>
+        <ion-button [color]="(hasActionStarted) ? 'primary' : 'medium'" expand="block" class="ion-no-margin" [routerLink]="(hasActionStarted) ? '/tabs/score' : null" routerDirection="forward" [disabled]="!hasActionStarted">پایان پروژه</ion-button>
+      </ng-container>
     </ion-card-content>
   </ion-card>
 </ion-content>
 <ion-alert
+  *ngIf="assignedItem"
   trigger="present-alert"
   header="آیا اطمینان دارید؟"
   message="تاریخ: 13402/01/10 | زمان: 19:58"
