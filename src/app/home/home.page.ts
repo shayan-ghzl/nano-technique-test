@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { Subscription, delay, tap } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +15,6 @@ export class HomePage implements OnDestroy{
   subscription = new Subscription();
 
   constructor(
-    private authenticationService: AuthenticationService,
     private loadingCtrl: LoadingController
   ) {
     // @ts-ignore:
@@ -41,16 +39,9 @@ export class HomePage implements OnDestroy{
 
   async logout(){
     await this.showLoading();
-    this.subscription.add(
-      this.authenticationService.logout().pipe(
-        tap(response => {
-          if(!response){
-            this.showToastError = true;
-          }
-          this.loading.dismiss();
-        })
-      ).subscribe()
-    );
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 2000);
   }
 
   async showLoading() {

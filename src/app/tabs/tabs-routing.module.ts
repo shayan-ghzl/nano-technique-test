@@ -12,22 +12,18 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () => import('../home/home.module').then( m => m.HomePageModule),
-        canMatch: [AuthenticationGuard]
       },
       {
         path: 'score',
         loadChildren: () => import('../score/score.module').then( m => m.ScorePageModule),
-        canMatch: [AuthenticationGuard]
       },
       {
         path: 'actions',
         loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
-        canMatch: [AuthenticationGuard]
       },
       {
         path: 'monthly-report',
         loadChildren: () => import('../monthly-report/monthly-report.module').then( m => m.MonthlyReportPageModule),
-        canMatch: [AuthenticationGuard]
       },
       {
         path: 'single-action',
@@ -35,7 +31,6 @@ const routes: Routes = [
           {
             path: ':actionId',
             loadChildren: () => import('../single-action/single-action.module').then( m => m.SingleActionPageModule),
-            canMatch: [AuthenticationGuard]
           },
           {
             path: '',

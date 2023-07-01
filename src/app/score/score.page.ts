@@ -1,16 +1,14 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AppSegment } from '../shared/components/segment/segment.component';
-import { IonContent } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@capacitor/geolocation';
-import { ApiService } from '../shared/services/api.service';
-import { Subscription, tap } from 'rxjs';
+import { IonContent } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { AppSegment } from '../shared/components/segment/segment.component';
 
 @Component({
   selector: 'app-score',
   templateUrl: './score.page.html',
   styleUrls: ['./score.page.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScorePage implements OnInit, OnDestroy {
 
@@ -50,7 +48,6 @@ export class ScorePage implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(
-    private apiService: ApiService
   ) { }
 
   ngOnInit() { 
@@ -73,21 +70,6 @@ export class ScorePage implements OnInit, OnDestroy {
 
     await this.printCurrentPosition();
     console.log(this.scoreForm.value);
-
-    this.subscription.add(
-      this.apiService.postInstallationResult(this.scoreForm.value).pipe(
-        tap(response => {
-          if(response){
-            this.toastMessage = 'گزارش با موفقیت ثبت شد.';
-          } else {
-            this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
-            this.scoreForm.enable({emitEvent: false});
-          }
-          this.showToastMessage = true;
-          this.showSpinner = false;
-        })
-      ).subscribe()
-    );
 
   }
 

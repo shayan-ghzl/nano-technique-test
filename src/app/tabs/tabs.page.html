@@ -7,10 +7,7 @@
         </ion-thumbnail>
         <ion-text color="light" class="ion-text-center">
           <h6 class="ion-no-margin ion-margin-top">خوش آمدید <ion-text color="warning" class="fw-bold">
-            <ng-container *ngTemplateOutlet="nameTemplate; context:{$implicit: (currentUser$ | async)!.Value}"></ng-container>
-            <ng-template #nameTemplate let-admin>
-              {{ admin.SrName + ' ' + admin.SrFamil }}
-            </ng-template>
+            ادمین
           </ion-text></h6>
         </ion-text>
       </div>

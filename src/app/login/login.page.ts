@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, tap } from 'rxjs';
-import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +24,6 @@ export class LoginPage implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(
-    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -46,23 +44,12 @@ export class LoginPage implements OnInit, OnDestroy {
     this.customerForm.disable({emitEvent: false});
     this.avoidRepetition = true;
     this.showSpinner = true;
-    this.subscription.add(
-      this.authenticationService.login(this.customerForm.value as { srName: string, srPass: string }).pipe(
-        tap(response => {
-          if(!response.customStatus){
-            if (response.error) {
-              this.errorMessage = 'نام کاربری یا کلمه عبور صحیح نیست.';
-            } else {
-              this.errorMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
-              this.avoidRepetition = false;
-            }
-            this.showToastError = true;
-            this.customerForm.enable({emitEvent: false});
-          }
-          this.showSpinner = false;
-        })
-      ).subscribe()
-    );
+    setTimeout(() => {
+      this.errorMessage = 'نام کاربری یا کلمه عبور صحیح نیست.';
+      this.showToastError = true;
+      this.customerForm.enable({emitEvent: false});
+      this.showSpinner = false;
+    }, 2000);
   }
 
   ngOnDestroy(): void {

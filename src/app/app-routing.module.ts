@@ -7,17 +7,14 @@ const routes: Routes = [
   {
     path: 'start',
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule),
-    canMatch: [LoggedinGuard]
   },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
-    canMatch: [LoggedinGuard]
   },
   {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule),
-    canMatch: [AuthenticationGuard]
   },
   { 
     path: '', 

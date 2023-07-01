@@ -1,14 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, tap } from 'rxjs';
-import { ApiService } from '../shared/services/api.service';
 import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-single-action',
   templateUrl: './single-action.page.html',
   styleUrls: ['./single-action.page.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SingleActionPage implements OnInit, OnDestroy {
 
@@ -32,7 +30,6 @@ export class SingleActionPage implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private apiService: ApiService,
     private navController: NavController,
   ) { }
 
@@ -50,18 +47,6 @@ export class SingleActionPage implements OnInit, OnDestroy {
         this.navController.navigateRoot('/tabs/home');
         return;
     }
-    this.subscription.add(
-      this.apiService.getDeviceById(deviceId).pipe(
-        tap(response => {
-          if (response) {
-            
-          } else {
-            this.navController.navigateRoot('/tabs/home');
-            
-          }
-        })
-      ).subscribe()
-    );
   }
 
   ngOnDestroy(): void {
