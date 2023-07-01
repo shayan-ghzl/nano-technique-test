@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,8 +22,8 @@ export class ActionsPage implements OnInit, OnDestroy {
 
   subscription = new Subscription();
 
-  constructor(
-  ) {
+  constructor(private router: Router) {
+    console.log(this.router.url.includes('today'));
   }
 
   ngOnInit() {

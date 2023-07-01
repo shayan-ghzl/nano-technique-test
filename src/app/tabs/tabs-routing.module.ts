@@ -19,7 +19,16 @@ const routes: Routes = [
       },
       {
         path: 'actions',
-        loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
+        children:[
+          {
+            path: 'today',
+            loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
+          },
+          {
+            path: '',
+            loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
+          }
+        ]
       },
       {
         path: 'monthly-report',
@@ -34,14 +43,14 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: './home',
+            redirectTo: '/tabs/home',
             pathMatch: 'full'
           }
         ]
       },
       {
         path: '',
-        redirectTo: './home',
+        redirectTo: '/tabs/home',
         pathMatch: 'full'
       },
     ]
