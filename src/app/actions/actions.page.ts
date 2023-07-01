@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import * as pako from 'pako';
-import { EMPTY, Subscription, mergeMap, of, take } from 'rxjs';
+import { EMPTY, Subscription, mergeMap, take } from 'rxjs';
 import { ApiService } from '../shared/services/api.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 
@@ -13,7 +14,6 @@ enum FROMSTATE {
   selector: 'app-actions',
   templateUrl: './actions.page.html',
   styleUrls: ['./actions.page.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActionsPage implements OnInit, OnDestroy {
 
@@ -31,9 +31,11 @@ export class ActionsPage implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(
+    private router: Router,
     private apiService: ApiService,
     private authenticationService: AuthenticationService,
   ) {
+    console.log(this.router.url.includes('today'));
   }
 
   ngOnInit() {

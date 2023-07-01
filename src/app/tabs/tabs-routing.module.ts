@@ -21,8 +21,18 @@ const routes: Routes = [
       },
       {
         path: 'actions',
-        loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
-        canMatch: [AuthenticationGuard]
+        children:[
+          {
+            path: 'today',
+            loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
+            canMatch: [AuthenticationGuard]
+          },
+          {
+            path: '',
+            loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
+            canMatch: [AuthenticationGuard]
+          }
+        ]
       },
       {
         path: 'monthly-report',
@@ -39,14 +49,14 @@ const routes: Routes = [
           },
           {
             path: '',
-            redirectTo: './home',
+            redirectTo: '/tabs/home',
             pathMatch: 'full'
           }
         ]
       },
       {
         path: '',
-        redirectTo: './home',
+        redirectTo: '/tabs/home',
         pathMatch: 'full'
       },
     ]
