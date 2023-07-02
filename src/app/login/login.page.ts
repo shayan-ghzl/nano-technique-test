@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular';
 import { Subscription, tap } from 'rxjs';
 
 @Component({
@@ -24,6 +25,7 @@ export class LoginPage implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(
+    private navController: NavController
   ) { }
 
   ngOnInit() {
@@ -49,7 +51,7 @@ export class LoginPage implements OnInit, OnDestroy {
       this.showToastError = true;
       this.customerForm.enable({emitEvent: false});
       this.showSpinner = false;
-      
+      this.navController.navigateRoot('/tabs/home');
     }, 2000);
   }
 
