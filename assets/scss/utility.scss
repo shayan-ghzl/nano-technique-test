@@ -1,0 +1,148 @@
+// Shadow-------------------------
+
+.shadow-sm{
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}	
+.shadow{
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}	
+.shadow-md{
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}	
+.shadow-lg{
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}	
+.shadow-xl{
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}	
+.shadow-2xl{
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}	
+.shadow-inner{
+    box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+}	
+.shadow-none{
+    box-shadow: 0 0 #0000;
+}	
+
+// Font Size-------------------------
+
+.text-xs{
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+}	
+.text-sm{
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+}	
+.text-base{
+    font-size: 1rem; /* 16px */
+    line-height: 1.5rem; /* 24px */
+}	
+.text-lg{
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75rem; /* 28px */
+}	
+.text-xl{
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+}	
+.text-2xl{
+    font-size: 1.5rem; /* 24px */
+    line-height: 2rem; /* 32px */
+}	
+.text-3xl{
+    font-size: 1.875rem; /* 30px */
+    line-height: 2.25rem; /* 36px */
+}	
+.text-4xl{
+    font-size: 2.25rem; /* 36px */
+    line-height: 2.5rem; /* 40px */
+}	
+.text-5xl{
+    font-size: 3rem; /* 48px */
+    line-height: 1;
+}	
+.text-6xl{
+    font-size: 3.75rem; /* 60px */
+    line-height: 1;
+}	
+.text-7xl{
+    font-size: 4.5rem; /* 72px */
+    line-height: 1;
+}	
+.text-8xl{
+    font-size: 6rem; /* 96px */
+    line-height: 1;
+}	
+.text-9xl{
+    font-size: 8rem; /* 128px */
+    line-height: 1;
+}
+
+// -------------------------
+
+.fst-italic {
+  font-style: italic;
+}
+.fst-normal {
+  font-style: normal;
+}
+.fw-lighter {
+  font-weight: lighter;
+}
+.fw-light {
+  font-weight: 300;
+}
+.fw-normal {
+  font-weight: 400;
+}
+.fw-medium {
+  font-weight: 500;
+}
+.fw-semibold {
+  font-weight: 600;
+}
+.fw-bold {
+  font-weight: 700;
+}
+.fw-bolder {
+  font-weight: bolder;
+}
+.lh-1 {
+  line-height: 1;
+}
+.lh-sm {
+  line-height: 1.25;
+}
+.lh-base {
+  line-height: 1.5;
+}
+.lh-lg {
+  line-height: 2;
+}	
+
+// -------------------------
+
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+small, .small {
+  font-size: 0.875em;
+}
+.blockquote-footer {
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875em;
+  color: #6c757d;
+}
+.blockquote-footer::before {
+  content: "— ";
+}
+.font-monospace {
+  font-family: var(--nano-font-monospace);
+}
+.margin-centerize{
+  margin: 0 auto;
+}
