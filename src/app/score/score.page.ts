@@ -67,10 +67,6 @@ export class ScorePage implements OnInit, OnDestroy {
     }
     this.scoreForm.disable({emitEvent: false});
     this.showSpinner = true;
-
-    await this.printCurrentPosition();
-    console.log(this.scoreForm.value);
-
   }
 
   async printCurrentPosition(){

@@ -49,6 +49,7 @@ export class LoginPage implements OnInit, OnDestroy {
       this.showToastError = true;
       this.customerForm.enable({emitEvent: false});
       this.showSpinner = false;
+      
     }, 2000);
   }
 

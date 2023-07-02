@@ -23,7 +23,6 @@ export class ActionsPage implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(private router: Router) {
-    console.log(this.router.url.includes('today'));
   }
 
   ngOnInit() {
