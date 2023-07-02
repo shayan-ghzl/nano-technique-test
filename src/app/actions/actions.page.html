@@ -8,7 +8,7 @@
       <ng-container *ngIf="list.length;else emptyTableTemplate">
     
         <ion-card *ngFor="let item of list; let index">
-          <ion-card-header color="primary" class="ion-no-padding" [routerLink]="(assignedItem) ? ['/tabs', 'single-action', item.idrRid, 'read-only'] : ['/tabs', 'single-action', item.idrRid]" routerDirection="forward">
+          <ion-card-header color="primary" class="ion-no-padding" [routerLink]="(assignedItem) ? ['/tabs', 'single-action', item.idrRid] : ['/tabs', 'single-action', item.idrRid, 'read-only']" routerDirection="forward">
             <ion-text class="ion-text-center">
               <h6 class="fw-bold card-heading">
                 {{item.idrClientName}}
@@ -16,7 +16,7 @@
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
-            <ion-item lines="none" button detail="false" [routerLink]="(assignedItem) ? ['/tabs', 'single-action', item.idrRid, 'read-only'] : ['/tabs', 'single-action', item.idrRid]" routerDirection="forward">
+            <ion-item lines="none" button detail="false" [routerLink]="(assignedItem) ? ['/tabs', 'single-action', item.idrRid] : ['/tabs', 'single-action', item.idrRid, 'read-only']" routerDirection="forward">
               <ion-thumbnail slot="start">
                 <img alt="device icon" src="./assets/icon/device-alt.svg" />
               </ion-thumbnail>
@@ -56,7 +56,7 @@
               </ion-label>
             </ion-item>
           <ion-row class="ion-justify-content-end toggle-row" *ngIf="!assignedItem">
-            <ion-toggle checked="false" [disabled]="item.disabled" (ionChange)="actionActived($event, item)"></ion-toggle>
+            <ion-toggle checked="false" (ionChange)="actionActived($event, item)"></ion-toggle>
           </ion-row>
           </ion-card-content>
         </ion-card>

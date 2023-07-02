@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import jwt_decode from "jwt-decode";
 import * as pako from 'pako';
 import { BehaviorSubject, Observable, catchError, map, of, take, tap, timeout } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AuthState, CurrentUser } from '../models/models';
-import jwt_decode from "jwt-decode";
+import { AuthState, ICurrentUser, IToken } from '../models/models';
 
 
 @Injectable({
@@ -22,12 +22,12 @@ export class AuthenticationService {
   }
 
   token = '';
+  servicerId!: number;
 
   constructor(
     private http: HttpClient,
     private navController: NavController,
   ) {
-
   }
 
   login(authInput: { srName: string; srPass: string }) {
@@ -49,7 +49,7 @@ export class AuthenticationService {
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-refresh-token', null, { params: { 'RToken': refreshToken } }).pipe(
       take(1),
       timeout(20000),
-      catchError(() => of(false)),
+      catchError(() => of<false>(false)),
       tap(response => {
         if (response) {
           const compressed = pako.deflate(response.Value);
@@ -65,7 +65,7 @@ export class AuthenticationService {
   logout() {
     return this.http.post<any>(environment.apiUrl + '/api/Servicer/servicer-logout', null).pipe(
       timeout(20000),
-      catchError(() => of(false)),
+      catchError(() => of<false>(false)),
       tap(response => {
         if (response) {
           this.logoutDone();
@@ -84,11 +84,12 @@ export class AuthenticationService {
   }
 
   intervalId: any;
-  loginDone(response: CurrentUser) {
-    const decoded: any = jwt_decode(response.Value.Token);
+  loginDone(response: ICurrentUser) {
+    const decoded: IToken = jwt_decode(response.Value.Token);
     if (decoded.iss === 'NanoTechnic.ir') {
       this.token = response.Value.Token;
-      this.setAuthState({...response, Key: decoded.srCode});
+      this.servicerId = +decoded.srCode;
+      this.setAuthState({...response, Key: this.servicerId});
       this.intervalId = setInterval(() => { 
         this.refreshToken(response.Value.RefreshToken).subscribe();
       }, 900000);

@@ -10,7 +10,6 @@ import { Subscription, tap } from 'rxjs';
   selector: 'app-score',
   templateUrl: './score.page.html',
   styleUrls: ['./score.page.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScorePage implements OnInit, OnDestroy {
 
@@ -27,6 +26,7 @@ export class ScorePage implements OnInit, OnDestroy {
   });
 
   showSpinner = false;
+  showSpinnerRetryLoc = false;
   showToastMessage = false;
   toastMessage = '';
 
@@ -54,6 +54,7 @@ export class ScorePage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() { 
+
   }
 
   ionViewWillEnter() {
@@ -92,15 +93,56 @@ export class ScorePage implements OnInit, OnDestroy {
   }
 
   async printCurrentPosition(){
+    this.showSpinnerRetryLoc = true;
+    await Geolocation.checkPermissions()
+      .then(async (response) => {
+        if (response.location == 'granted') {
+          await this.geoGetCurrentPosition();
+        } else {
+          await this.geoRequestPermissions();
+        }
+      })  
+      .catch((error) => {
+        console.log('Geolocation check permission denied');
+        this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
+        this.showToastMessage = true;
+      });
+  }
+
+  async geoGetCurrentPosition(){
     await Geolocation.getCurrentPosition()
       .then((coordinates) => {
         this.scoreForm.patchValue({'SrrPlaceOfEndingInstall': `${coordinates.coords.latitude}#${coordinates.coords.longitude}`}, { emitEvent: false });
         console.log('Current position:', coordinates);
       })
       .catch((error) => {
-        console.log('display a button to retry geolocation');
+        console.log('Geolocation get Position denied');
+        this.toastMessage = 'موقعیت مکانی شما دردسترس نیست.';
+        this.showToastMessage = true;
+      })
+      .finally(() => {
+        this.showSpinnerRetryLoc = false;
       });
   }
+
+  async geoRequestPermissions(){
+    await Geolocation.requestPermissions()
+      .then(async (response) => {
+        if (response.location == 'granted') {
+          await this.geoGetCurrentPosition();
+        } else {
+          console.log('Geolocation request Permissions denied');
+          this.toastMessage = 'لطفا دسترسی لازم را بدهید.';
+          this.showToastMessage = true;
+        }
+      })
+      .catch((error) => {
+        console.log('Geolocation request Permissions denied');
+        this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
+        this.showToastMessage = true;
+      });
+  }
+
 
   ngOnDestroy(): void {
   }

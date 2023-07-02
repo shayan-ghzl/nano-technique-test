@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { AuthenticationService } from '../shared/services/authentication.service';
-import { CurrentUser } from '../shared/models/models';
+import { ICurrentUser } from '../shared/models/models';
 
 @Component({
   selector: 'app-tabs',
@@ -11,7 +11,7 @@ import { CurrentUser } from '../shared/models/models';
 })
 export class TabsPage implements OnInit {
 
-  currentUser$: Observable<CurrentUser> = this.authenticationService.getAuthState$ as Observable<CurrentUser>;
+  currentUser$: Observable<ICurrentUser> = this.authenticationService.getAuthState$ as Observable<ICurrentUser>;
 
   subscription = new Subscription();
 

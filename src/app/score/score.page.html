@@ -54,6 +54,10 @@
 
         <div class="segment-body-item" [ngClass]="{'segment-active': segmentValue == '3'}">
           <app-score-upload-image formControlName="pImage"></app-score-upload-image>
+          <ion-button (click)="printCurrentPosition()" expand="block" *ngIf="!scoreForm.controls.SrrPlaceOfEndingInstall.value" [ngClass]="{'loading': showSpinnerRetryLoc}" fill="clear" class="retry-location ion-no-margin ion-margin-top has-spinner">
+            <ion-spinner name="dots" color="primary" duration="1000"></ion-spinner>
+            <span>موقعیت مکانی شما در دسترس نمی باشد لطفا دوباره امتحان کنید</span>
+          </ion-button>
           <ion-button type="submit" class="ion-no-margin ion-margin-top has-spinner" [ngClass]="{'loading': showSpinner}" type="submit" color="primary" expand="block" [disabled]="scoreForm.invalid || showSpinner">
             <ion-spinner name="dots" color="light" duration="1000"></ion-spinner>
             <span>تاییدیه نهایی</span>

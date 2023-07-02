@@ -56,10 +56,10 @@ export class LoginPage implements OnInit, OnDestroy {
               this.errorMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
               this.avoidRepetition = false;
             }
+            this.showSpinner = false;
             this.showToastError = true;
             this.customerForm.enable({emitEvent: false});
           }
-          this.showSpinner = false;
         })
       ).subscribe()
     );
@@ -67,7 +67,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
-
+  
   ionViewDidLeave() {
     this.subscription.unsubscribe();
   }

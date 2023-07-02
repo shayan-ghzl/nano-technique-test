@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as pako from 'pako';
-import { Subscription, switchMap, take, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
+import { IDevice } from '../shared/models/models';
 import { ApiService } from '../shared/services/api.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 
@@ -13,14 +14,13 @@ enum FROMSTATE {
   selector: 'app-monthly-report',
   templateUrl: './monthly-report.page.html',
   styleUrls: ['./monthly-report.page.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonthlyReportPage implements OnInit {
 
   @ViewChild('refresher') refresher!: HTMLIonRefresherElement;
   @ViewChild('infiniteScroll') infiniteSctoll!: HTMLIonInfiniteScrollElement;
 
-  items: any[] | null = null;
+  items: IDevice[] | null = null;
   showToastError = false;
   PageNum = 1;
   totalPages = 1;
@@ -44,39 +44,38 @@ export class MonthlyReportPage implements OnInit {
     const [today, monthAgo]: [string, string] = [new Date().nanoFormat(), new Date().daysAgo(31).nanoFormat()];
 
     this.subscription.add(
-      this.authenticationService.getAuthState$.pipe(
-        switchMap(authState => {
-          return this.apiService.getinstalledDevices({ 'ServicerID': authState!.Key, 'AzDateCTI': '2023-01-01', 'TaDateCTI': '2023-06-30', 'Skip': -1, 'PageNum': this.PageNum })
-        })
-      ).pipe(
-        take(1),
-        tap(response => {
+      this.apiService.getinstalledDevices({ 'ServicerID': this.authenticationService.servicerId, 'AzDateCTI': '2023-01-01', 'TaDateCTI': '2023-06-30', 'Skip': -1, 'PageNum': this.PageNum }).pipe(
+        tap((response) => {
+          console.log(response);
+          
           if (response) {
             if (response.RData) {
               const compressed = pako.deflate(response.RData);
-              const restored = JSON.parse(pako.inflate(compressed, { to: 'string' }));
-              this.items = restored;
-              this.totalPages = response.totalPages;
+              const restored: IDevice[] = JSON.parse(pako.inflate(compressed, { to: 'string' }));
+              if (state === FROMSTATE.REFRESHER) {
+                this.items = restored;
+              } else {
+                this.items = (this.items) ? this.items.concat(restored) : restored;
+              }
+              this.totalPages = response.TotalPages;
             } else {
               this.items = [];
             }
           } else {
             this.showToastError = true;
           }
-        })
-      ).subscribe({
-        complete: () => {
           if (state === FROMSTATE.REFRESHER) {
             this.refresher.complete()
           } else if (state === FROMSTATE.INFINITESCROLL) {
             this.infiniteSctoll.complete();
           }
-        },
-       })
+        })
+      ).subscribe()
     );
   }
-
+  
   handleRefresh() {
+    this.PageNum = 1;
     this.getReports(FROMSTATE.REFRESHER);
   }
 

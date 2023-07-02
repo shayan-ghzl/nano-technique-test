@@ -1,11 +1,11 @@
 <ion-content>
-  <ion-card class="ion-no-margin">
+  <ion-card class="ion-no-margin" *ngIf="actionData;else loadingTemplate">
     <ion-card-content>
       <ion-label class="fw-bold action-title" color="primary">پروژه 1</ion-label>
       <div>
         <ion-text>
           <i class="nanotech-icon nanotech-icon-user"></i>
-          <p>احمد احمدیان</p>
+          <p>{{actionData.idrClientName}}</p>
         </ion-text>
         <ion-text>
           <i class="nanotech-icon nanotech-icon-arrow-left"></i>
@@ -13,27 +13,29 @@
         </ion-text>
         <ion-text>
           <i class="nanotech-icon nanotech-icon-location"></i>
-          <p>مکان: خیابان جی</p>
+          <p>مکان: {{actionData.servicePlaceAddr}}</p>
         </ion-text>
       </div>
       <ion-label class="fw-bold ion-margin-top">شرح فعالیت</ion-label>
-      <ion-textarea
-        [ngClass]="{ 'ion-margin-bottom': assignedItem }"
-        [autoGrow]="true"
-        value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      >
-      </ion-textarea>
-      <ng-container *ngIf="assignedItem">
-        <ion-button [color]="(hasActionStarted) ? 'medium' : 'primary'" expand="block" class="ion-no-margin ion-margin-bottom" [disabled]="hasActionStarted" id="present-alert">شروع به انجام کار</ion-button>
+      <div class="summery" [ngClass]="{ 'ion-margin-bottom': !assignedItem }">
+         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </div>
+      <ng-container *ngIf="!assignedItem">
+        <ion-button [color]="(hasActionStarted) ? 'medium' : 'primary'" expand="block" class="ion-no-margin ion-margin-bottom" [disabled]="hasActionStarted" (click)="isAlertOpen=true">شروع به انجام کار</ion-button>
         <ion-button [color]="(hasActionStarted) ? 'primary' : 'medium'" expand="block" class="ion-no-margin" [routerLink]="(hasActionStarted) ? '/tabs/score' : null" routerDirection="forward" [disabled]="!hasActionStarted">پایان پروژه</ion-button>
       </ng-container>
     </ion-card-content>
   </ion-card>
+<ng-template #loadingTemplate>
+  <ion-spinner name="circles" color="primary" duration="1000"></ion-spinner>
+</ng-template>
 </ion-content>
 <ion-alert
-  *ngIf="assignedItem"
-  trigger="present-alert"
+  *ngIf="!assignedItem && actionData"
+  [isOpen]="isAlertOpen"
+  (didDismiss)="isAlertOpen=false"
   header="آیا اطمینان دارید؟"
-  message="تاریخ: 13402/01/10 | زمان: 19:58"
+  [message]="'تاریخ: ' + actionData.idrDateOfService + ' | زمان: ' + actionData.idrTimeOfService"
   [buttons]="alertButtons"
 ></ion-alert>
+<ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" [message]="errorMessage" [duration]="5000"></ion-toast>

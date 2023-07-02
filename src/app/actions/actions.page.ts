@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import * as pako from 'pako';
-import { EMPTY, Subscription, mergeMap, take, tap } from 'rxjs';
+import { EMPTY, Subscription, mergeMap, tap } from 'rxjs';
+import { IDevice } from '../shared/models/models';
 import { ApiService } from '../shared/services/api.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 
@@ -20,7 +21,7 @@ export class ActionsPage implements OnInit, OnDestroy {
   @ViewChild('refresher') refresher!: HTMLIonRefresherElement;
   @ViewChild('infiniteScroll') infiniteSctoll!: HTMLIonInfiniteScrollElement;
 
-  items: any[] | null = null;
+  items: IDevice[] | null = null;
 
   showToastError = false;
   toastMessage = '';
@@ -29,7 +30,7 @@ export class ActionsPage implements OnInit, OnDestroy {
   PageNum = 1;
   totalPages = 1;
 
-  servicerID!: number;
+  servicerID = this.authenticationService.servicerId;
 
   subscription = new Subscription();
 
@@ -49,48 +50,42 @@ export class ActionsPage implements OnInit, OnDestroy {
   }
 
   getActions(state: FROMSTATE | null = null){
-   // @ts-ignore:
-   const [today, monthAgo]: [string, string] = [new Date().nanoFormat(), new Date().daysAgo(31).nanoFormat()];
-
-   this.subscription.add(
-     this.authenticationService.getAuthState$.pipe(
-       take(1),
-       mergeMap(authState => {
-        this.servicerID = authState!.Key;
-         return this.apiService.getReadyDevices({ 'ServicerID': this.servicerID, 'AzDateCTI': '2023-01-01', 'TaDateCTI': '2023-06-30', 'Skip': -1, 'PageNum': this.PageNum, 'AcceptedKind': this.assignedItem ? 'A' : 'N' }).pipe(
-          mergeMap((response) => {
-            let restored: any[] = [];
-            if (response) {
-              if (response.RData) {
-                const compressed = pako.deflate(response.RData);
-                restored = JSON.parse(pako.inflate(compressed, { to: 'string' }));
-                if (state === FROMSTATE.REFRESHER) {
-                  this.items = restored;
-                } else {
-                  this.items = (this.items) ? this.items.concat(restored) : restored;
-                }
-                this.totalPages = response.totalPages;
+    // @ts-ignore:
+    const [today, monthAgo]: [string, string] = [new Date().nanoFormat(), new Date().daysAgo(31).nanoFormat()];
+   
+    this.subscription.add(
+      this.apiService.getReadyDevices({ 'ServicerID': this.servicerID, 'AzDateCTI': '2023-01-01', 'TaDateCTI': '2023-06-30', 'Skip': -1, 'PageNum': this.PageNum, 'AcceptedKind': this.assignedItem ? 'A' : 'N' }).pipe(
+        mergeMap((response) => {
+          let restored: IDevice[] = [];
+          if (response) {
+            if (response.RData) {
+              const compressed = pako.deflate(response.RData);
+              restored = JSON.parse(pako.inflate(compressed, { to: 'string' }));
+              if (state === FROMSTATE.REFRESHER) {
+                this.items = restored;
               } else {
-                this.items = [];
+                this.items = (this.items) ? this.items.concat(restored) : restored;
               }
+              this.totalPages = response.TotalPages;
             } else {
-              this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
-              this.showToastError = true;
+              this.items = [];
             }
-            if (state === FROMSTATE.REFRESHER) {
-              this.refresher.complete()
-            } else if (state === FROMSTATE.INFINITESCROLL) {
-              this.infiniteSctoll.complete();
-            }
-            if (restored.length) {
-              return this.apiService.postViewdPlans({ 'ServicerID': this.servicerID, 'json_IDRList': JSON.stringify(restored.map(x => ({ 'idrRid': x.idrRid }))) });
-            } 
-            return EMPTY;
-           })
-          )
-       })
-     ).subscribe()
-   );
+          } else {
+            this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
+            this.showToastError = true;
+          }
+          if (state === FROMSTATE.REFRESHER) {
+            this.refresher.complete()
+          } else if (state === FROMSTATE.INFINITESCROLL) {
+            this.infiniteSctoll.complete();
+          }
+          if (restored.length) {
+            return this.apiService.postViewdPlans({ 'ServicerID': this.servicerID, 'json_IDRList': JSON.stringify(restored.map(x => ({ 'idrRid': x.idrRid }))) });
+          } 
+          return EMPTY;
+        })
+      ).subscribe()
+    );
   }
 
   handleRefresh() {
@@ -108,7 +103,8 @@ export class ActionsPage implements OnInit, OnDestroy {
   }
 
   actionActived(event: any, item: any) {
-    item.disabled = true;
+    const toggle = event.target as HTMLIonToggleElement;
+    toggle.disabled = true;
     this.subscription.add(
       this.apiService.postAcceptPlanToInstall({
         "servicerID": this.servicerID,
@@ -117,11 +113,9 @@ export class ActionsPage implements OnInit, OnDestroy {
         tap(response => {
           if (response) {
             this.toastMessage = 'نصب این دستگاه به شما واگذار شد.';
-            
           } else {
             this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
             item.disabled = false;
-            const toggle = event.target as HTMLIonToggleElement;
             toggle.checked = !toggle.checked;
           }
           this.showToastError = true;

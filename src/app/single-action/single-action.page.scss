@@ -9,16 +9,12 @@ ion-card-content{
         font-size: 13px;
     }
 }
-ion-textarea{
-    --background: #e5e7eb;
-    --ion-item-border-color: #aaa;
-    --border-width: 2px;
+.summery{
+    background: #e5e7eb;
+    border: 2px solid #aaa;
     border-radius: 5px;
-    --padding-end: 4px;
-    --padding-start: 4px;
+    padding: 6px;
     font-size: 13px;
-    overflow: hidden;
-    border: var(--border-width) var(--border-style) var(--ion-item-border-color);
 }
 ion-alert{
     --ion-color-step-600: #000;
@@ -41,4 +37,8 @@ ion-text{
     .nanotech-icon{
         margin-left: 6px;
     }
+}
+ion-spinner{
+    margin: 0 auto;
+    display: block;
 }

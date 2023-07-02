@@ -56,6 +56,8 @@ ion-label{
         border-radius: 5px;
         --padding-end: 4px;
         --padding-start: 4px;
+        --padding-top: 4px;
+        --padding-bottom: 4px;
         font-size: 13px;
         overflow: hidden;
         border: var(--border-width) var(--border-style) var(--ion-item-border-color);
@@ -69,5 +71,13 @@ ion-label{
 .segment-body-item{
     &:not(.segment-active){
         display: none;
+    }
+}
+.retry-location{
+    white-space: break-spaces;
+    font-size: 12px;
+    height: 41px;
+    &::part(native){
+        line-height: 1.3;
     }
 }
