@@ -16,13 +16,13 @@ export class ScorePage implements OnInit, OnDestroy {
   @ViewChild(IonContent) content!: IonContent;
 
   scoreForm = new FormGroup({
-    ResultOfService: new FormControl({value: 'done', disabled: false}, { validators: [Validators.required] }),
-    DescOfService: new FormControl({value: '', disabled: false}),
-    SrrPlaceOfEndingInstall : new FormControl({value: '', disabled: false}, { validators: [Validators.required] }),
-    pImage: new FormControl({value: [], disabled: false}, { validators: [Validators.required] }),
-    servicerPointOfService: new FormControl({disabled: false}, { validators: [Validators.required] }),
-    servicerPointOfClientLearning: new FormControl({disabled: false}, { validators: [Validators.required] }),
-    servicerPointOfClientSatisfy: new FormControl({disabled: false}, { validators: [Validators.required] }),
+    ResultOfService: new FormControl({ value: 'done', disabled: false }, { validators: [Validators.required] }),
+    DescOfService: new FormControl({ value: '', disabled: false }),
+    SrrPlaceOfEndingInstall: new FormControl({ value: '', disabled: false }, { validators: [Validators.required] }),
+    pImage: new FormControl({ value: [], disabled: false }, { validators: [Validators.required] }),
+    servicerPointOfService: new FormControl({ value: null, disabled: false }, { validators: [Validators.required] }),
+    servicerPointOfClientLearning: new FormControl({ value: null, disabled: false }, { validators: [Validators.required] }),
+    servicerPointOfClientSatisfy: new FormControl({ value: null, disabled: false }, { validators: [Validators.required] }),
   });
 
   showSpinner = false;
@@ -53,8 +53,7 @@ export class ScorePage implements OnInit, OnDestroy {
     private apiService: ApiService
   ) { }
 
-  ngOnInit() { 
-
+  ngOnInit() {
   }
 
   ionViewWillEnter() {
@@ -65,11 +64,11 @@ export class ScorePage implements OnInit, OnDestroy {
     this.content.scrollToTop();
   }
 
-  async submit(){
+  async submit() {
     if (this.scoreForm.invalid) {
       return;
     }
-    this.scoreForm.disable({emitEvent: false});
+    this.scoreForm.disable({ emitEvent: false });
     this.showSpinner = true;
 
     await this.printCurrentPosition();
@@ -78,11 +77,11 @@ export class ScorePage implements OnInit, OnDestroy {
     this.subscription.add(
       this.apiService.postInstallationResult(this.scoreForm.value).pipe(
         tap(response => {
-          if(response){
+          if (response) {
             this.toastMessage = 'گزارش با موفقیت ثبت شد.';
           } else {
             this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
-            this.scoreForm.enable({emitEvent: false});
+            this.scoreForm.enable({ emitEvent: false });
           }
           this.showToastMessage = true;
           this.showSpinner = false;
@@ -92,7 +91,7 @@ export class ScorePage implements OnInit, OnDestroy {
 
   }
 
-  async printCurrentPosition(){
+  async printCurrentPosition() {
     this.showSpinnerRetryLoc = true;
     await Geolocation.checkPermissions()
       .then(async (response) => {
@@ -101,7 +100,7 @@ export class ScorePage implements OnInit, OnDestroy {
         } else {
           await this.geoRequestPermissions();
         }
-      })  
+      })
       .catch((error) => {
         console.log('Geolocation check permission denied');
         this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
@@ -109,10 +108,10 @@ export class ScorePage implements OnInit, OnDestroy {
       });
   }
 
-  async geoGetCurrentPosition(){
+  async geoGetCurrentPosition() {
     await Geolocation.getCurrentPosition()
       .then((coordinates) => {
-        this.scoreForm.patchValue({'SrrPlaceOfEndingInstall': `${coordinates.coords.latitude}#${coordinates.coords.longitude}`}, { emitEvent: false });
+        this.scoreForm.patchValue({ 'SrrPlaceOfEndingInstall': `${coordinates.coords.latitude}#${coordinates.coords.longitude}` }, { emitEvent: false });
         console.log('Current position:', coordinates);
       })
       .catch((error) => {
@@ -125,7 +124,7 @@ export class ScorePage implements OnInit, OnDestroy {
       });
   }
 
-  async geoRequestPermissions(){
+  async geoRequestPermissions() {
     await Geolocation.requestPermissions()
       .then(async (response) => {
         if (response.location == 'granted') {
@@ -149,6 +148,6 @@ export class ScorePage implements OnInit, OnDestroy {
 
   ionViewDidLeave() {
     this.subscription.unsubscribe();
-  } 
+  }
 
 }

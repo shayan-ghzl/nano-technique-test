@@ -38,3 +38,4 @@
 <ng-template #addIconTemplate>
   <i class="nanotech-icon nanotech-icon-add"></i>
 </ng-template>
+<ion-toast [isOpen]="showToastError" (didDismiss)="showToastError = false" color="dark" [message]="toastMessage" [duration]="5000"></ion-toast>

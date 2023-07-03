@@ -1,19 +1,17 @@
-import { Component, OnDestroy } from '@angular/core';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { Subscription, delay, tap } from 'rxjs';
+import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { take, tap } from 'rxjs';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnDestroy{
+export class HomePage {
 
   showToastError = false;
   loading!: HTMLIonLoadingElement;
-
-  subscription = new Subscription();
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -41,8 +39,8 @@ export class HomePage implements OnDestroy{
 
   async logout(){
     await this.showLoading();
-    this.subscription.add(
       this.authenticationService.logout().pipe(
+        take(1),
         tap(response => {
           if(!response){
             this.showToastError = true;
@@ -50,7 +48,6 @@ export class HomePage implements OnDestroy{
           this.loading.dismiss();
         })
       ).subscribe()
-    );
   }
 
   async showLoading() {
@@ -59,12 +56,5 @@ export class HomePage implements OnDestroy{
     });
     this.loading.present();
   }
-
-  ngOnDestroy(): void {
-  }
-
-  ionViewDidLeave() {
-    this.subscription.unsubscribe();
-  } 
 
 }

@@ -12,10 +12,12 @@ import { Camera, CameraResultType } from '@capacitor/camera';
       multi: true,
       useExisting: ScoreUploadImageComponent
     }
-  ],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  ]
 })
 export class ScoreUploadImageComponent implements ControlValueAccessor {
+
+  toastMessage = '';
+  showToastError = false;
 
   imagesInterface: string[] = ['', '', '', '', ''];
 
@@ -49,22 +51,58 @@ export class ScoreUploadImageComponent implements ControlValueAccessor {
   async selectImage(index: number) {
     this.markAsTouched();
     if (!this.disabled) {
-      await Camera.getPhoto({
-        quality: 100,
-        allowEditing: false,
-        resultType: CameraResultType.Uri
-      })
-      .then((image) => {
-        if (image.webPath) {
-          this.images.push(image.webPath);
-          this.imagesInterface[index] = image.webPath;
-          this.onChange(this.images);
+      await Camera.checkPermissions()
+        .then(async (response) => {
+          if (response.camera == 'granted') {
+            await this.captureImage(index);
+          } else {
+            await this.cameraRequestPermission(index);
+          }
+        })    
+        .catch((error) => {
+          this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
+          this.showToastError = true;
+          console.log('Camera check permission denied');
+        });
+    }
+  }
+
+  async captureImage(index: number){
+    await Camera.getPhoto({
+      quality: 100,
+      allowEditing: false,
+      resultType: CameraResultType.Uri
+    })
+    .then((image) => {
+      if (image.webPath) {
+        this.images.push(image.webPath);
+        this.imagesInterface[index] = image.webPath;
+        this.onChange(this.images);
+      }
+    })
+    .catch((error) => {
+      this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
+      this.showToastError = true;
+      console.log('upload photo canceled');
+    });
+  }
+
+  async cameraRequestPermission(index: number) {
+    await Camera.requestPermissions()
+      .then(async (response) => {
+        if (response.camera === 'granted') {
+          await this.captureImage(index);
+        } else {
+          this.toastMessage = 'لطفا دسترسی لازم را بدهید.';
+          this.showToastError = true;
+          console.log('Camera permission not granted');
         }
       })
       .catch((error) => {
+        this.toastMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
+        this.showToastError = true;
         console.log('upload photo canceled');
       });
-    }
   }
 
 }

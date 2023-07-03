@@ -1,44 +1,44 @@
-ion-content{
+ion-content {
     --background: #cacaca;
     --padding-bottom: 16px;
     --padding-start: 32px;
     --padding-end: 32px;
 }
-ion-card-content{
-    p{
+ion-card-content {
+    p {
         font-size: 13px;
     }
 }
-.summery{
+.summery {
     background: #e5e7eb;
     border: 2px solid #aaa;
     border-radius: 5px;
     padding: 6px;
     font-size: 13px;
 }
-ion-alert{
+ion-alert {
     --ion-color-step-600: #000;
 }
-ion-label{
+ion-label {
     display: block;
-    &:not(.action-title){
+    &:not(.action-title) {
         margin-bottom: 8px;
     }
-    &.action-title{
+    &.action-title {
         margin-bottom: 16px;
     }
 }
-ion-text{
+ion-text {
     display: flex;
     margin-bottom: 8px;
-    p{
+    p {
         margin: 0;
     }
-    .nanotech-icon{
+    .nanotech-icon {
         margin-left: 6px;
     }
 }
-ion-spinner{
+ion-spinner {
     margin: 0 auto;
     display: block;
 }

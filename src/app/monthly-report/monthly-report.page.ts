@@ -47,7 +47,6 @@ export class MonthlyReportPage implements OnInit {
       this.apiService.getinstalledDevices({ 'ServicerID': this.authenticationService.servicerId, 'AzDateCTI': '2023-01-01', 'TaDateCTI': '2023-06-30', 'Skip': -1, 'PageNum': this.PageNum }).pipe(
         tap((response) => {
           console.log(response);
-          
           if (response) {
             if (response.RData) {
               const compressed = pako.deflate(response.RData);

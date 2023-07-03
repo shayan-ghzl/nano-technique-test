@@ -29,7 +29,6 @@ export class SingleActionPage implements OnInit, OnDestroy {
       text: 'بله',
       role: 'confirm',
       handler: async () => {
-        this.hasActionStarted = true; 
         this.isAlertOpen = false;
         await this.showLoading();
         await this.printCurrentPosition();
@@ -84,6 +83,7 @@ export class SingleActionPage implements OnInit, OnDestroy {
   }
   
   ionViewWillEnter() {
+    console.log('%csingle ionViewWillEnter', 'font-size: 1rem; font-weight: bold;');
     this.assignedItem = this.router.url.includes('read-only');
     const deviceId = +(this.activatedRoute.snapshot.paramMap.get('actionId') || 'null');
     if (isNaN(deviceId)) {
