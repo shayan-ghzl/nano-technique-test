@@ -50,7 +50,8 @@ export class LoginPage implements OnInit, OnDestroy {
       this.authenticationService.login(this.customerForm.value as { srName: string, srPass: string }).pipe(
         tap(response => {
           if(!response.customStatus){
-            if (response.error) {
+            // Bad Request: means client has sent wrong parameter(s)
+            if (response.status == 400) {
               this.errorMessage = 'نام کاربری یا کلمه عبور صحیح نیست.';
             } else {
               this.errorMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
