@@ -5,6 +5,7 @@ import { EMPTY, Subscription, mergeMap, tap } from 'rxjs';
 import { IDevice } from '../shared/models/models';
 import { ApiService } from '../shared/services/api.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
+import { TabsPage } from '../tabs/tabs.page';
 
 enum FROMSTATE {
   REFRESHER = 1,

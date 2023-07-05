@@ -1,5 +1,5 @@
 ion-content {
-    --background: var(--ion-color-light-tint);
+    --background: var(--ion-color-light-shade);
 }
 .inner-section {
     display: flex;
@@ -31,7 +31,7 @@ ion-content {
 .dome {
     height: 28px;
     border-radius: 28px 28px 0 0;
-    background-color: var(--ion-color-light-tint);
+    background-color: var(--ion-color-light-shade);
 }
 ion-text {
     --color: #373737;
@@ -46,8 +46,10 @@ ion-text {
     }
 }
 ion-input {
+    --color: var(--ion-color-dark);
     --padding-start: 8px;
-    --background: #edebeb;
+    --background: rgba(var(--ion-color-medium-rgb), 0.3);
+    --border-color: var(--ion-color-medium);
     --border-radius: 9px;
     min-height: 42px !important;
     margin-bottom: 18px;

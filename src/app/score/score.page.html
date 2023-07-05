@@ -6,7 +6,7 @@
 
       <form [formGroup]="scoreForm" (ngSubmit)="submit()" autocomplete="off">
 
-        <div class="segment-body-item description" [ngClass]="{'segment-active': segmentValue == '1'}">
+        <div class="segment-body-item description" [ngClass]="{'segment-active': segmentValue == 1}">
           <ion-label class="fw-bold">نتیجه کار</ion-label>
           <ion-list>
             <ion-radio-group formControlName="ResultOfService">
@@ -33,7 +33,7 @@
           </ion-textarea>
         </div>
     
-        <div class="segment-body-item points" [ngClass]="{'segment-active': segmentValue == '2'}">
+        <div class="segment-body-item points" [ngClass]="{'segment-active': segmentValue == 2}">
           <ion-text class="ion-text-center">
             <p>پس از پایان پروژه براساس دیدگاه خود به هریک
               از موارد زیر امتیاز دهید.</p>
@@ -52,7 +52,7 @@
           </div>
         </div>
 
-        <div class="segment-body-item" [ngClass]="{'segment-active': segmentValue == '3'}">
+        <div class="segment-body-item" [ngClass]="{'segment-active': segmentValue == 3}">
           <app-score-upload-image formControlName="pImage"></app-score-upload-image>
           <ion-button (click)="printCurrentPosition()" expand="block" *ngIf="!scoreForm.controls.SrrPlaceOfEndingInstall.value" [ngClass]="{'loading': showSpinnerRetryLoc}" fill="clear" class="retry-location ion-no-margin ion-margin-top has-spinner">
             <ion-spinner name="dots" color="primary" duration="1000"></ion-spinner>

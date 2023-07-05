@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AppSegment } from '../shared/components/segment/segment.component';
-import { IonContent } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@capacitor/geolocation';
-import { ApiService } from '../shared/services/api.service';
+import { IonContent } from '@ionic/angular';
 import { Subscription, tap } from 'rxjs';
+import { AppSegment } from '../shared/components/segment/segment.component';
+import { ApiService } from '../shared/services/api.service';
+import { TabsPage } from '../tabs/tabs.page';
 
 @Component({
   selector: 'app-score',
@@ -29,31 +30,52 @@ export class ScorePage implements OnInit, OnDestroy {
   showSpinnerRetryLoc = false;
   showToastMessage = false;
   toastMessage = '';
+  
+  _segmentValue = 1;
 
-  segmentValue = '1';
+  get segmentValue() {
+    return this._segmentValue;
+  }
 
+  set segmentValue(v) {
+    this.Tabs.nextTabStatus = v;
+    this._segmentValue = v;
+  }
+  
   segment: AppSegment[] = [
     {
       label: 'شرح پروژه',
-      value: '1'
+      value: 1
     },
     {
       label: 'امتیازها',
-      value: '2'
+      value: 2
     },
     {
       label: 'تصاویر',
-      value: '3'
+      value: 3
     },
   ];
 
   subscription = new Subscription();
 
   constructor(
-    private apiService: ApiService
-  ) { }
+    private apiService: ApiService,
+    private Tabs: TabsPage,
+  ) {
+      Tabs.nextTabStatus = 1;
+  }
 
   ngOnInit() {
+    this.subscription.add(
+      this.Tabs.tabPressed.subscribe((response) => {
+        if (response == 'next') {
+          this.segmentValue = this.segmentValue + 1;
+        } else {
+          this.segmentValue = this.segmentValue - 1;
+        }
+      })
+    );
   }
 
   ionViewWillEnter() {
@@ -142,8 +164,8 @@ export class ScorePage implements OnInit, OnDestroy {
       });
   }
 
-
   ngOnDestroy(): void {
+    this.Tabs.nextTabStatus = 4;
   }
 
   ionViewDidLeave() {

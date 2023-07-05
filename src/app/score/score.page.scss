@@ -1,5 +1,5 @@
 ion-content {
-    --background: #cacaca;
+    --background: var(--ion-color-light-shade);
     --padding-bottom: 16px;
     --padding-start: 32px;
     --padding-end: 32px;
@@ -9,7 +9,7 @@ ion-content {
         .segment {
             margin: 0 -20px;
             padding: 0 32px 16px 32px;
-            background: #ccc;
+            background: var(--ion-color-light-shade);
             label {
                 &:first-of-type {
                     transform: translateX(-20px);
@@ -50,7 +50,8 @@ ion-label {
         border-bottom: 2px solid var(--ion-color-primary);
     }
     ion-textarea {
-        --background: #e5e7eb;
+        --background: var(--ion-color-light-shade);
+        --color: var(--ion-color-dark);
         --ion-item-border-color: #aaa;
         --border-width: 2px;
         border-radius: 5px;

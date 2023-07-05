@@ -1,5 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Keyboard } from '@capacitor/keyboard';
+import { IonInput } from '@ionic/angular';
 import { Subscription, tap } from 'rxjs';
 import { AuthenticationService } from '../shared/services/authentication.service';
 
@@ -7,8 +9,11 @@ import { AuthenticationService } from '../shared/services/authentication.service
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPage implements OnInit, OnDestroy {
+
+  @ViewChild('autoFocus') usernameInput!: IonInput;
 
   customerForm = new FormGroup({
     srName: new FormControl({ value: '', disabled: false }, { validators: [Validators.required], nonNullable: true }),
@@ -25,8 +30,16 @@ export class LoginPage implements OnInit, OnDestroy {
   subscription = new Subscription();
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) { }
+
+  ionViewDidEnter(): void {
+    this.usernameInput.setFocus();
+    Keyboard.show()
+    .catch((error) => {
+      console.log('Keyboard plugin is not implemented on web');
+    });
+  }
 
   ngOnInit() {
   }

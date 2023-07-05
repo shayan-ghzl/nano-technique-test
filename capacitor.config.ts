@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Nanotech',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'http'
   }
 };
 

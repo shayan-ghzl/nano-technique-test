@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: 'start',
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule),
-    canMatch: [LoggedinGuard]
+    // canMatch: [LoggedinGuard]
   },
   {
     path: 'login',
@@ -22,11 +22,11 @@ const routes: Routes = [
   { 
     path: '', 
     pathMatch: 'full',
-    redirectTo: '/login'
+    redirectTo: '/start'
   },
   {
     path: '**',
-    redirectTo: '/start'
+    redirectTo: '/login'
   },
 ];
 

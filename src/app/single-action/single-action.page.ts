@@ -32,6 +32,7 @@ export class SingleActionPage implements OnInit, OnDestroy {
         this.isAlertOpen = false;
         await this.showLoading();
         await this.printCurrentPosition();
+        this.hasActionStarted = true;   
         if (this.coordinates) {
           this.subscription.add(
             this.apiService.postStartInstallation({
@@ -83,7 +84,6 @@ export class SingleActionPage implements OnInit, OnDestroy {
   }
   
   ionViewWillEnter() {
-    console.log('%csingle ionViewWillEnter', 'font-size: 1rem; font-weight: bold;');
     this.assignedItem = this.router.url.includes('read-only');
     const deviceId = +(this.activatedRoute.snapshot.paramMap.get('actionId') || 'null');
     if (isNaN(deviceId)) {
@@ -159,7 +159,6 @@ export class SingleActionPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('singleAction ngOnDestroy'); 
   }
 
   ionViewDidLeave() {

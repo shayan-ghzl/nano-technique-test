@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-start',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private navController: NavController,
+  ) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.navController.navigateRoot('/login');
+    }, 3000);
   }
 
 }

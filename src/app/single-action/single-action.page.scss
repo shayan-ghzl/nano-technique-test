@@ -1,8 +1,11 @@
 ion-content {
-    --background: #cacaca;
+    --background: var(--ion-color-light-shade);
     --padding-bottom: 16px;
     --padding-start: 32px;
     --padding-end: 32px;
+}
+ion-card{
+    --color: var(--ion-color-dark-tint);
 }
 ion-card-content {
     p {
@@ -10,7 +13,7 @@ ion-card-content {
     }
 }
 .summery {
-    background: #e5e7eb;
+    background: var(--ion-color-light-shade);
     border: 2px solid #aaa;
     border-radius: 5px;
     padding: 6px;

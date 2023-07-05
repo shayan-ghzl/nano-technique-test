@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
-import { AuthenticationService } from '../shared/services/authentication.service';
 import { ICurrentUser } from '../shared/models/models';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-tabs',
@@ -11,8 +11,18 @@ import { ICurrentUser } from '../shared/models/models';
 })
 export class TabsPage implements OnInit {
 
-  currentUser$: Observable<ICurrentUser> = this.authenticationService.getAuthState$ as Observable<ICurrentUser>;
+  @Output() tabPressed = new EventEmitter<'next' | 'prev'>();
 
+  currentUser$: Observable<ICurrentUser> = this.authenticationService.getAuthState$ as Observable<ICurrentUser>;
+  
+  /*
+    1: tab one
+    2: tab two
+    3: tab three
+    4: means we are not it score page
+  */
+  nextTabStatus = 4;
+  
   subscription = new Subscription();
 
   constructor(
@@ -21,10 +31,21 @@ export class TabsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
   }
 
   back(){
-    this.navCtrl.pop();
+    if (this.nextTabStatus == 4 || this.nextTabStatus == 1) {
+      this.navCtrl.pop();
+    } else {
+      this.tabPressed.emit('prev');
+    }
+  }
+
+  scoreNextSegment(){
+    if (this.nextTabStatus < 3) {
+      this.tabPressed.emit('next');
+    }
   }
 
   ngOnDestroy(): void {

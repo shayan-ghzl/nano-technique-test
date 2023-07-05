@@ -16,7 +16,7 @@
             </ion-text>
           </ion-card-header>
           <ion-card-content class="ion-no-padding">
-            <ion-item lines="none" button detail="false" [routerLink]="(assignedItem) ? ['/tabs', 'single-action', item.idrRid] : ['/tabs', 'single-action', item.idrRid, 'read-only']" routerDirection="forward">
+            <ion-item class="text-xs" lines="none" button detail="false" [routerLink]="(assignedItem) ? ['/tabs', 'single-action', item.idrRid] : ['/tabs', 'single-action', item.idrRid, 'read-only']" routerDirection="forward">
               <ion-thumbnail slot="start">
                 <img alt="device icon" src="./assets/icon/device-alt.svg" />
               </ion-thumbnail>

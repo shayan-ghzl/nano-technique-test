@@ -1,11 +1,10 @@
 ion-content {
-  --background: #cacaca;
+  --background: var(--ion-color-light-shade);
   --padding-bottom: 16px;
   --padding-start: 32px;
   --padding-end: 32px;
 }
 .content-heading {
-  --color: #373737;
   font-size: 13px;
 }
 .menu-container {

@@ -1,47 +1,46 @@
-ion-content{
-    --background: #cacaca;
+ion-content {
+    --background: var(--ion-color-light-shade);
     --padding-bottom: 16px;
     --padding-start: 32px;
     --padding-end: 32px;
 }
-ion-spinner{
+ion-spinner {
     margin: 0 auto;
     display: block;
 }
-ion-item{
-    font-size: 13px;
-    color: #707070;
-}
-ion-card-header{
+ion-card-header {
     cursor: pointer;
 }
-.card-heading{
-    font-size: 14px;
-    margin-top: 10px;
-    margin-bottom: 8px;
+.card-heading {
+    font-size: 13px;
+    margin-top: 9px;
+    margin-bottom: 7px;
 }
-.empty-message{
+.empty-message {
     font-size: 14px;
     margin: 0;
 }
-ion-col{
-    --ion-grid-column-padding-xs: 2px;
+ion-col {
+    --ion-grid-column-padding-xs: 3px;
 }
-ion-card{
-    &:not(:last-child){
+ion-card {
+    &:not(:last-child) {
         margin: 0 0 16px 0;
     }
-    &:last-child{
+    &:last-child {
         margin: 0;
     }
 }
-ion-thumbnail{
-    --size: 42px;
+ion-item {
+    --color: var(--ion-color-dark-tint);
+}
+ion-thumbnail {
+    --size: 36px;
     margin-inline: 0px 8px;
 }
-.nanotech-icon{
+.nanotech-icon {
     margin-left: 4px;
 }
-.toggle-row{
+.toggle-row {
     padding: 0 0 16px 16px;
 }

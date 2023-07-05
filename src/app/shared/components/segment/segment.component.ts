@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export interface AppSegment{
   label: string;
-  value: string;
+  value: number;
 }
 
 @Component({
@@ -20,16 +20,16 @@ export interface AppSegment{
 })
 export class SegmentComponent implements ControlValueAccessor {
 
-  activeSegmentValue!: string;
+  activeSegmentValue!: number;
   @Input({required: true}) segment!: AppSegment[];
 
 
-  onChange = (value: string) => {};
+  onChange = (value: number) => {};
   onTouched = () => {};
   touched = false;
   disabled = false;
 
-  writeValue(obj: string): void {
+  writeValue(obj: number): void {
     this.activeSegmentValue = obj;
   }
   registerOnChange(fn: any): void {
