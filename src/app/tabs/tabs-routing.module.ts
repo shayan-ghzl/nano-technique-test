@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
-import { AuthenticationGuard } from '../shared/guards/authentication.guard';
+import { authenticationGuard } from '../shared/guards/application.guard';
 
 const routes: Routes = [
   {
@@ -12,12 +12,12 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () => import('../home/home.module').then( m => m.HomePageModule),
-        canMatch: [AuthenticationGuard]
+        canActivateChild: [authenticationGuard]
       },
       {
         path: 'score',
         loadChildren: () => import('../score/score.module').then( m => m.ScorePageModule),
-        canMatch: [AuthenticationGuard]
+        canActivateChild: [authenticationGuard]
       },
       {
         path: 'actions',
@@ -25,19 +25,19 @@ const routes: Routes = [
           {
             path: 'today',
             loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
-            canMatch: [AuthenticationGuard]
+            canActivateChild: [authenticationGuard]
           },
           {
             path: '',
             loadChildren: () => import('../actions/actions.module').then( m => m.ActionsPageModule),
-            canMatch: [AuthenticationGuard]
+            canActivateChild: [authenticationGuard]
           }
         ]
       },
       {
         path: 'monthly-report',
         loadChildren: () => import('../monthly-report/monthly-report.module').then( m => m.MonthlyReportPageModule),
-        canMatch: [AuthenticationGuard]
+        canActivateChild: [authenticationGuard]
       },
       {
         path: 'single-action',
@@ -45,12 +45,12 @@ const routes: Routes = [
           {
             path: ':actionId',
             loadChildren: () => import('../single-action/single-action.module').then( m => m.SingleActionPageModule),
-            canMatch: [AuthenticationGuard]
+            canActivateChild: [authenticationGuard]
           },
           {
             path: ':actionId/read-only',
             loadChildren: () => import('../single-action/single-action.module').then( m => m.SingleActionPageModule),
-            canMatch: [AuthenticationGuard]
+            canActivateChild: [authenticationGuard]
           },
           {
             path: '',

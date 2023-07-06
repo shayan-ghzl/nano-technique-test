@@ -3,10 +3,10 @@ import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-start',
-  templateUrl: './start.page.html',
-  styleUrls: ['./start.page.scss'],
+  templateUrl: './splash-screen.page.html',
+  styleUrls: ['./splash-screen.page.scss'],
 })
-export class StartPage implements OnInit {
+export class SplashScreenPage implements OnInit {
 
   constructor(
     private navController: NavController,

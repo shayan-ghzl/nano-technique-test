@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { take, tap } from 'rxjs';
 import { AuthenticationService } from '../shared/services/authentication.service';
+import { TabsPage } from '../tabs/tabs.page';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ export class HomePage {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private tabsPage: TabsPage,
   ) {
     // @ts-ignore:
     Date.prototype.nanoFormat = function(){
@@ -55,6 +57,14 @@ export class HomePage {
       message: 'منتظر بمانید...',
     });
     this.loading.present();
+  }
+
+  ionViewDidEnter(){
+    this.tabsPage.prevTabStatus = true;
+  }
+  
+  ionViewDidLeave(){
+    this.tabsPage.prevTabStatus = false;
   }
 
 }

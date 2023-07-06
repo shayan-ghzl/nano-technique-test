@@ -34,7 +34,7 @@
     <i aria-hidden="true" class="nanotech-icon nanotech-icon-home"></i>
   </ion-tab-button>
   
-  <ion-tab-button (click)="back()">
+  <ion-tab-button (click)="back()" [disabled]="prevTabStatus">
     <i aria-hidden="true" class="nanotech-icon nanotech-icon-back"></i>
   </ion-tab-button>
 </ion-tab-bar>

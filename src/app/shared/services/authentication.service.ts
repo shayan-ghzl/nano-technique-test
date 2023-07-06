@@ -12,7 +12,7 @@ import { AuthState, ICurrentUser, IToken } from '../models/models';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  // auth state manager
   private authStateSource = new BehaviorSubject<AuthState | null>(null);
 
   getAuthState$: Observable<AuthState | null> = this.authStateSource.asObservable();
@@ -20,6 +20,9 @@ export class AuthenticationService {
   private setAuthState(authState: AuthState) {
     this.authStateSource.next(authState);
   }
+
+  // splash screen should fired only once state manager
+  isFirstTime = true;
 
   token = '';
   servicerId!: number;

@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StartPage } from './start.page';
+import { SplashScreenPage } from './splash-screen.page';
 
-describe('StartPage', () => {
-  let component: StartPage;
-  let fixture: ComponentFixture<StartPage>;
+describe('SplashScreenPage', () => {
+  let component: SplashScreenPage;
+  let fixture: ComponentFixture<SplashScreenPage>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(StartPage);
+    fixture = TestBed.createComponent(SplashScreenPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
