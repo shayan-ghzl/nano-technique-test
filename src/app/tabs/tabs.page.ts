@@ -22,6 +22,7 @@ export class TabsPage implements OnInit {
     4: means we are not it score page
   */
   nextTabStatus = 4;
+  prevTabStatus = true;
   
   subscription = new Subscription();
 

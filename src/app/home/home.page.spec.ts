@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, LoadingController } from '@ionic/angular';
 
+
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { TabsPage } from '../tabs/tabs.page';
 import { HomePage } from './home.page';
+import { ActivatedRoute } from '@angular/router';
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -10,7 +14,12 @@ describe('HomePage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HomePage],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [
+        { provide: AuthenticationService, useValue: {} },
+        { provide: LoadingController, useValue: {} },
+        { provide: TabsPage, useValue: {} },
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
