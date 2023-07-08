@@ -5,11 +5,11 @@ describe('SplashScreenPage', () => {
   let component: SplashScreenPage;
   let fixture: ComponentFixture<SplashScreenPage>;
 
-  beforeEach(async(() => {
+  beforeEach(async() => {
     fixture = TestBed.createComponent(SplashScreenPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }));
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
