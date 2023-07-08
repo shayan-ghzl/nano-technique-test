@@ -1,12 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { JwtInterceptor } from './jwt.interceptor';
+import { AuthenticationService } from '../services/authentication.service';
 
 describe('JwtInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
-      JwtInterceptor
-      ]
+      JwtInterceptor,
+      { provide: AuthenticationService, useValue: {} },
+    ]
   }));
 
   it('should be created', () => {

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
+
 import { ScoreUploadImageComponent } from './score-upload-image.component';
 
 describe('ScoreUploadImageComponent', () => {
