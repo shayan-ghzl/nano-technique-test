@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Keyboard } from '@capacitor/keyboard';
 import { IonInput } from '@ionic/angular';
@@ -9,7 +9,6 @@ import { AuthenticationService } from '../shared/services/authentication.service
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPage implements OnInit, OnDestroy {
 
@@ -36,9 +35,9 @@ export class LoginPage implements OnInit, OnDestroy {
   ionViewDidEnter(): void {
     this.usernameInput.setFocus();
     Keyboard.show()
-    .catch((error) => {
-      console.log('Keyboard plugin is not implemented on web');
-    });
+      .catch((error) => {
+        console.log('Keyboard plugin is not implemented on web');
+      });
   }
 
   ngOnInit() {
@@ -52,19 +51,21 @@ export class LoginPage implements OnInit, OnDestroy {
     );
   }
 
-  submit(){
+  submit() {
     if (this.customerForm.invalid) {
       return;
     }
-    this.customerForm.disable({emitEvent: false});
+    this.customerForm.disable({ emitEvent: false });
     this.avoidRepetition = true;
     this.showSpinner = true;
     this.subscription.add(
-      this.authenticationService.login(this.customerForm.value as { srName: string, srPass: string }).pipe(
+      this.authenticationService.login(this.customerForm.value as { srName: string, srPass: string; }).pipe(
         tap(response => {
-          if(!response.customStatus){
+
+          if (!response.customStatus) {
             // Bad Request: means client has sent wrong parameter(s)
             if (response.status == 400) {
+              console.log(response);
               this.errorMessage = 'نام کاربری یا کلمه عبور صحیح نیست.';
             } else {
               this.errorMessage = 'خطایی رخ داد لطفا دوباره امتحان کنید.';
@@ -72,7 +73,7 @@ export class LoginPage implements OnInit, OnDestroy {
             }
             this.showSpinner = false;
             this.showToastError = true;
-            this.customerForm.enable({emitEvent: false});
+            this.customerForm.enable({ emitEvent: false });
           }
         })
       ).subscribe()
@@ -81,7 +82,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
-  
+
   ionViewDidLeave() {
     this.subscription.unsubscribe();
   }
